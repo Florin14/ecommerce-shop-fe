@@ -1,6 +1,5 @@
 import {
   Autocomplete,
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -11,16 +10,12 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import {
-  SubmitHandler,
-  FormProvider,
-  useController,
-  useForm,
-} from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { StyledInput } from "../../StyledInput";
+import AddIcon from "@mui/icons-material/Add";
 import {
   addProducts,
+  getProducts,
   getProductsResources,
 } from "../../../../store/slices/products/thunks";
 import { RootState } from "../../../../store";
@@ -28,14 +23,7 @@ import { BrandResponseDTO } from "../../../../types/brands/Brands";
 import { CategoryResponseDTO } from "../../../../types/categories/Categories";
 import { GenderResponseDTO } from "../../../../types/genders/Genders";
 import { ImageUploadComponent } from "../../ImageUploadComponent/ImageUploadComponent";
-// import { Role } from '../../../types/User'
-// import { FormInput } from '../../common/FormInput'
-// import { AnnouncementDto } from '../../../types/Announcements'
-// import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
-// import { selectInterestAreasOptions, selectInterestAreasOptionsLoading, selectUserData } from '../../account/selectors'
-// import { fetchInterestAreasOptions } from '../../account/actions'
-// import { LoadingOverlay } from '../../common/LoadingOverlay'
-// import { addAnnouncement, updateAnnouncement } from '../actions'
+import { CreateProductStockSizesModal } from "../CreateProductStockSizesModal";
 
 export type CreateProductType = {
   id: number;
@@ -43,6 +31,11 @@ export type CreateProductType = {
   interestArea: string;
   description: string;
   price: number;
+};
+
+export type AddProductStock = {
+  sizeId: number | null;
+  stockQuantity: number | null;
 };
 
 interface CreateAnnouncementModalProps {
@@ -65,7 +58,11 @@ export const CreateProductModal: React.FC<CreateAnnouncementModalProps> = ({
   const genders = useAppSelector(
     (state: RootState) => state.products.resources.genders
   );
-  // const role = userData?.role
+
+  const sizes = useAppSelector(
+    (state: RootState) => state.products.resources.productSizes
+  );
+
   const dispatch = useAppDispatch();
   const [brand, setBrand] = useState<BrandResponseDTO | null>(null);
   const [category, setCategory] = useState<CategoryResponseDTO | null>(null);
@@ -74,34 +71,59 @@ export const CreateProductModal: React.FC<CreateAnnouncementModalProps> = ({
   const [sku, setSKU] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [price, setPrice] = useState<number | null>(null);
-  const [stockQuantity, setStockQuantity] = useState<number | null>(0);
-  const [productImage, setProductImage] = useState<File | null>(null);
+  const [productImages, setProductImages] = useState<File[] | []>([]);
+  const [stockIsOpen, setStockIsOpen] = useState(false);
+  const [productStock, setProductStock] = useState<AddProductStock[]>([
+    { stockQuantity: null, sizeId: null },
+  ]);
+  const handleCloseCreateProductSizes = () => {
+    setStockIsOpen(false);
+  };
 
   useEffect(() => {
     if (isOpen) dispatch(getProductsResources({}));
   }, [isOpen]);
 
-  const handleProductSubmit: SubmitHandler<CreateProductType> = async () => {
+  const handleProductSubmit = () => {
     dispatch(
       addProducts({
         name,
         sku,
         description,
         price,
-        stockQuantity,
         brandId: brand?.id,
         categoryId: category?.id,
         genderId: gender?.id,
+        images: productImages,
+        productStock: productStock?.map((sto) => ({
+          sizeId: sto?.sizeId,
+          stockQuantity: parseInt(sto?.stockQuantity),
+        })),
       })
-    );
+    ).then((res) => {
+      if (!res?.payload?.error) {
+        handleCloseModal();
+        dispatch(getProducts({}))
+      }
+    });
   };
 
-  const handleImagesUploaded = (images: File[]) => {
-    console.log(images);
+  const handleImagesUploaded = (images) => {
+    setProductImages(images);
   };
 
   const handleCloseModal = () => {
     onClose();
+    setBrand(null);
+    setCategory(null);
+    setGender(null);
+    setName(null);
+    setSKU(null);
+    setDescription(null);
+    setPrice(null);
+    setProductImages([]);
+    setStockIsOpen(false);
+    setProductStock([{ stockQuantity: null, sizeId: null }]);
   };
 
   return (
@@ -117,97 +139,42 @@ export const CreateProductModal: React.FC<CreateAnnouncementModalProps> = ({
           <DialogInstructions>
             Fill in the details for the new product
           </DialogInstructions>
-          {/* <StyledInput
-            label="Name"
-            fieldName="name"
-            options={{
-              required: true,
-              minLength: {
-                value: 3,
-                message: "Name should be min 3 characters long",
-              },
-            }}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
           <TextField
-            label="Price"
-            name="price"
-            size="small"
-            color="secondary"
-            type="number"
-            value={price || ""}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
-
-          <TextField
-            label="Stock quantity"
-            name="stockQuantity"
-            size="small"
-            color="secondary"
-            type="number"
-            value={stockQuantity || 0}
-            onChange={(e) => setStockQuantity(Number(e.target.value))}
-          />
-
-          <Autocomplete
-            options={brands || []}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                color="secondary"
-                InputLabelProps={{ shrink: true }}
-                label="Brand"
-              />
-            )}
-            value={brand}
-            onChange={(_, b) => setBrand(b)}
-            getOptionLabel={(option) => option?.name?.toString() || ""}
-          /> */}
-
-          {/* Repeat the above structure for Category and Gender Autocomplete */}
-
-          {/* <StyledInput
-            label="Description"
-            fieldName="description"
-            options={{ maxLength: 200, required: true }}
-            helperText="Max 200 characters"
-            value={description || ""}
-            onChange={(e) => setDescription(e.target.value)}
-            multiline
-            rows={3}
-          />
-
-          <StyledInput
-            label="SKU"
-            fieldName="sku"
-            options={{ maxLength: 200, required: true }}
-            value={sku || ""}
-            onChange={(e) => setSKU(e.target.value)}
-            multiline
-          /> */}
-
-          <TextField
+            required
             label="Name"
             value={name || ""}
             onChange={(e) => setName(e.target.value)}
           />
 
           <TextField
+            required
             label="Price"
             type="number"
             value={price || ""}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
-
-          <TextField
-            label="Stock quantity"
-            type="number"
-            value={stockQuantity || ""}
-            onChange={(e) => setStockQuantity(Number(e.target.value))}
-          />
+          {productStock?.filter(
+            (stock) => stock?.sizeId !== null && stock?.stockQuantity !== null
+          )?.length > 0 && (
+            <StocksSection>
+              {productStock?.map((size) => (
+                <div>
+                  {
+                    sizes?.find((stockSize) => stockSize?.id === size?.sizeId)
+                      ?.name
+                  }{" "}
+                  {">"} {size?.stockQuantity}
+                </div>
+              ))}
+            </StocksSection>
+          )}
+          <CreateStockButton
+            variant="outlined"
+            color="secondary"
+            onClick={() => setStockIsOpen(true)}
+          >
+            <AddIcon /> Stock quantity
+          </CreateStockButton>
 
           <Autocomplete
             options={brands || []}
@@ -218,6 +185,7 @@ export const CreateProductModal: React.FC<CreateAnnouncementModalProps> = ({
                 color="secondary"
                 InputLabelProps={{ shrink: true }}
                 label="Brand"
+                required
               />
             )}
             value={brand}
@@ -225,10 +193,44 @@ export const CreateProductModal: React.FC<CreateAnnouncementModalProps> = ({
             getOptionLabel={(option) => option?.name?.toString() || ""}
           />
 
+          <Autocomplete
+            options={categories || []}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                color="secondary"
+                InputLabelProps={{ shrink: true }}
+                label="Category"
+                required
+              />
+            )}
+            value={category}
+            onChange={(_, c) => setCategory(c)}
+            getOptionLabel={(option) => option?.name?.toString() || ""}
+          />
+          <Autocomplete
+            options={genders || []}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                color="secondary"
+                InputLabelProps={{ shrink: true }}
+                label="Gender"
+                required
+              />
+            )}
+            value={gender}
+            onChange={(_, g) => setGender(g)}
+            getOptionLabel={(option) => option?.name?.toString() || ""}
+          />
+
           <TextField
             label="Description"
             value={description || ""}
             onChange={(e) => setDescription(e.target.value)}
+            required
           />
 
           <TextField
@@ -238,17 +240,36 @@ export const CreateProductModal: React.FC<CreateAnnouncementModalProps> = ({
             onChange={(e) => setSKU(e.target.value)}
           />
 
-          <ImageUploadComponent onImagesUploaded={handleImagesUploaded} />
+          <ImageUploadComponent
+            onImagesUploaded={handleImagesUploaded}
+            required
+          />
         </StyledDialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal} color="error">
             Cancel
           </Button>
-          <CreateProductButton color="info" type="submit" variant="outlined">
+          <CreateProductButton
+            color="info"
+            type="submit"
+            variant="outlined"
+            disabled={
+              !productStock?.filter(
+                (stock) =>
+                  stock?.sizeId !== null && stock?.stockQuantity !== null
+              )?.length > 0
+            }
+          >
             Create
           </CreateProductButton>
         </DialogActions>
       </FormWrapper>
+      <CreateProductStockSizesModal
+        isOpen={stockIsOpen}
+        onClose={handleCloseCreateProductSizes}
+        productStock={productStock}
+        setProductStock={setProductStock}
+      />
     </Dialog>
   );
 };
@@ -280,4 +301,16 @@ const CreateProductButton = styled(Button)`
     opacity: 0.5;
     // border: 0;
   }
+`;
+
+const CreateStockButton = styled(Button)`
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  font-size: 14px;
+`;
+
+const StocksSection = styled("div")`
+  width: 100%;
 `;

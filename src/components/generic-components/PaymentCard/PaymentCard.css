@@ -40,7 +40,7 @@
     color: #fff;
     background: #000000;
     background:
-        url(/assets/bg-card.jpg);
+        url(../../../assets/bg-card.jpg);
     background-size: cover;
 }
 

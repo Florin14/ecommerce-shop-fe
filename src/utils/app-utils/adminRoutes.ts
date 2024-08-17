@@ -1,6 +1,5 @@
 import Dashboard from "../../components/generic-components/icons/Dashboard";
 import PersonalIcon from "../../components/generic-components/icons/PersonalIcon";
-import EmptyIcon from "../../components/generic-components/icons/EmptyIcon";
 
 export const adminRoutes = [
     {

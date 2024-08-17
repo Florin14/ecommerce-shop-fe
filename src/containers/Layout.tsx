@@ -8,9 +8,8 @@ import { styled } from "@mui/material";
 // import { selectUserData } from '../account/selectors'
 // import { fetchUserAvatar, fetchUserData } from '../account/actions'
 import { NavBar } from "../components/generic-components/Navbar";
-import { Sidebar } from "../components/generic-components/Sidebar";
 import { LoadingScreen } from "../utils/app-utils";
-import AquabisSidebar from "../components/generic-components/Sidebar/AquabisSidebar/AquabisSidebar";
+import { AquabisSidebar } from "../components/generic-components/Sidebar/AquabisSidebar";
 
 export const Layout: React.FC = () => {
   // const dispatch = useAppDispatch()
@@ -50,8 +49,8 @@ export const Layout: React.FC = () => {
             open={mobileOpen}
             // menuMinHeight={960}
           />
-          <Content>
-            <NavBar />
+          <Content className="content">
+            {/* <NavBar /> */}
             <Outlet />
           </Content>
         </Container>
@@ -62,23 +61,21 @@ export const Layout: React.FC = () => {
 
 const Page = styled("div")`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  background-color: #a3a0a0;
 `;
 
 const Container = styled("div")`
   display: flex;
   flex-direction: column;
-  // gap: 40px;
   height: 100%;
 `;
 
 const Content = styled("div")`
-  width: calc(100% - 260px);
+  width: 100%;
   // display: flex;
   position: relative;
-  left: 260px;
   height: 100%;
-
   // align-self: center;
   gap: 20px;
   // padding: 0 20px 20px 440px;

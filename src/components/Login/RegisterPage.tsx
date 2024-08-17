@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { css, styled, Typography } from "@mui/material";
+// import { useAppSelector } from '../../redux/hooks'
 
-// import { LoginForm } from '../login/LoginForm'
 // import { RegistrationForm } from '../registration/RegistrationForm'
 // import { LoadingOverlay } from '../common/LoadingOverlay'
 
-// import registerIllustrationSrc from '../registration/images/register_figure.png'
+import illustrationSrc from "../../assets/Sigla.png";
 // import loginIllustrationSrc from '../login/images/login_figure.png'
 // import bottomWaveSrc from './images/wave.svg'
-import { LoginForm } from "../../generic-components/LoginForm";
-import Login from "../../generic-components/Login/Login";
-// import { Sidebar3 } from "../../generic-components/Sidebar/Sidebar3";
-// import { Sidebar2 } from "../../generic-components/Sidebar";
+import { LoginForm } from "../generic-components/LoginForm";
+import { RegistrationForm } from "../generic-components/RegistrationForm";
 
 enum Mode {
   REGISTER = "REGISTER",
   LOGIN = "LOGIN",
 }
 
-const WelcomePage: React.FC = () => {
-  const [mode, setMode] = useState(Mode.LOGIN);
+const RegisterPage: React.FC = () => {
+  const [mode, setMode] = useState(Mode.REGISTER);
 
   //   const loginLoading = useAppSelector(state => state.appState.loginLoading)
   //   const registerLoading = useAppSelector(state => state.appState.registerLoading)
@@ -29,34 +27,33 @@ const WelcomePage: React.FC = () => {
     [Mode.REGISTER]: {
       title: "Find a mentor",
       subtitle: "suitable to your needs",
-      // src: registerIllustrationSrc,
+      src: illustrationSrc,
     },
     [Mode.LOGIN]: {
       title: "Welcome back!",
       subtitle: "",
-      // src: loginIllustrationSrc,
+      src: illustrationSrc,
     },
   };
 
   return (
     <Container>
-      {/* <LoadingOverlay visible={false} /> */}
-      {/* showLoading */}
-      {/* <LeftSection> */}
-      {/* <Title variant="h3">{leftSectionInfo[mode].title}</Title> */}
-      {/* <SubTitle variant="h5">{leftSectionInfo[mode].subtitle}</SubTitle> */}
-      {/* <Illustration src={leftSectionInfo[mode].src} alt={`${mode} Illustration`} /> */}
-      {/* </LeftSection> */}
+      {/* <LoadingOverlay visible={showLoading} /> */}
+      <LeftSection>
+        {/* <Title variant="h3">{leftSectionInfo[mode].title}</Title>
+        <SubTitle variant="h5">{leftSectionInfo[mode].subtitle}</SubTitle> */}
+        <Illustration
+          src={leftSectionInfo[mode].src}
+          alt={`${mode} Illustration`}
+        />
+      </LeftSection>
       <RightSection>
         <Layer visible={mode === Mode.LOGIN}>
-          {/* <LoginForm registerClick={() => setMode(Mode.REGISTER)} /> */}
-          {/* <Login/> */}
-          {/* <Sidebar2 /> */}
-          {/* <Sidebar3/> */}
+          <LoginForm registerClick={() => setMode(Mode.REGISTER)} />
         </Layer>
-        {/* <Layer visible={mode === Mode.REGISTER}>
+        <Layer visible={mode === Mode.REGISTER}>
           <RegistrationForm loginClick={() => setMode(Mode.LOGIN)} />
-        </Layer> */}
+        </Layer>
       </RightSection>
       {/* <BottomWave src={bottomWaveSrc} alt="" /> */}
     </Container>
@@ -72,21 +69,15 @@ const Container = styled("div")`
   background: #fefefe;
 `;
 
-const Title = styled(Typography)`
-  user-select: none;
-  font-weight: bold;
-`;
-
-const SubTitle = styled(Typography)`
-  user-select: none;
-  font-weight: bold;
-`;
-
 const LeftSection = styled("div")`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  background: black;
+  height: 400px;
   width: 400px;
+  border-radius: 50px 0 50px 0;
 `;
 
 const RightSection = styled("div")`
@@ -95,8 +86,8 @@ const RightSection = styled("div")`
 `;
 
 const Illustration = styled("img")`
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 150px;
   object-fit: cover;
   -webkit-user-drag: none;
   -webkit-user-select: none;
@@ -121,4 +112,4 @@ const BottomWave = styled("img")`
   opacity: 0.8;
 `;
 
-export default WelcomePage;
+export default RegisterPage;

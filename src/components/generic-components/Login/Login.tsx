@@ -1,6 +1,10 @@
 import React from "react";
 import "./Login.css";
 import { styled } from "@mui/material";
+import logo from "../../../assets/logo (1).png"
+import google from "../../../assets/google.png"
+import apple from "../../../assets/apple.png"
+import mock from "../../../assets/mock.png"
 
 interface SignUpProps {}
 
@@ -9,7 +13,7 @@ const Login: React.FC<SignUpProps> = () => {
     <FormWrapper>
       <div className="form-side">
         <a href="#" title="Logo">
-          <img className="logo" src="assets/logo.png" alt="Logo" />
+          <img className="logo" src={logo} alt="Logo" />
         </a>
         <form className="my-form">
           <div className="login-welcome-row">
@@ -17,11 +21,11 @@ const Login: React.FC<SignUpProps> = () => {
           </div>
           <div className="socials-row">
             <a href="#" title="Use Google">
-              <img src="assets/google.png" alt="Google" />
+              <img src={google} alt="Google" />
               Sign up with Google
             </a>
             <a href="#" title="Use Apple">
-              <img src="assets/apple.png" alt="Apple" />
+              <img src={apple} alt="Apple" />
               Sign up with Apple
             </a>
           </div>
@@ -93,7 +97,7 @@ const Login: React.FC<SignUpProps> = () => {
         </form>
       </div>
       <div className="info-side">
-        <img src="assets/mock.png" alt="Mock" className="mockup" />
+        <img src={mock} alt="Mock" className="mockup" />
         <div className="welcome-message">
           <h2>Navitron Maps! 👋</h2>
           <p>

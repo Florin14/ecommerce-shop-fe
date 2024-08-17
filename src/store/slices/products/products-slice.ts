@@ -5,17 +5,23 @@ export interface ProductInterface {
 }
 
 export interface ProductsInterface {
-  products: []
+  products: [];
 }
 
 export interface ProductSlice {
-    products: [],
-    resources: {},
-  }
+  products: [];
+  resources: {};
+  product: any;
+  sortBy: string | null,
+  sortType: string | null
+}
 
 const initialState: ProductSlice = {
   products: [],
   resources: {},
+  product: null,
+  sortBy: null,
+  sortType: null
 };
 
 const productSlice = createSlice({
@@ -24,6 +30,18 @@ const productSlice = createSlice({
   reducers: {
     setToEmpty(state, action) {
       state.products = [];
+      state.resources = {};
+      state.product = null;
+      state.sortBy = null;
+      state.sortType = null;
+    },
+
+    setSortBy(state, action) {
+      state.sortBy = action.payload;
+    },
+
+    setSortType(state, action) {
+      state.sortType = action.payload;
     },
 
     setProducts(state, action) {
@@ -36,6 +54,10 @@ const productSlice = createSlice({
 
     addProduct(state, action: PayloadAction<ProductInterface>) {
       state.products.push(action.payload.item);
+    },
+
+    setProduct(state, action: PayloadAction<ProductInterface>) {
+      state.product = action.payload;
     },
 
     editProduct(state, action) {

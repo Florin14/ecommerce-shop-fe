@@ -41,6 +41,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ registerClick }) => {
   const goToRegister = () => {
     registerClick()
     reset()
+    navigate("/register")
   }
 
   return (
@@ -97,6 +98,7 @@ const Container = styled('div')`
   flex-direction: column;
   gap: 15px;
   padding: 25px;
+  border-radius: 0 50px 0 50px;
   background: #f4f4f4;
   box-shadow: rgba(0, 0, 0, 0.16) 0 10px 36px 0, rgba(0, 0, 0, 0.06) 0 0 0 1px;
 `

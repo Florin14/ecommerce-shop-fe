@@ -30,11 +30,10 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { adminRoutes } from "../../../../utils/app-utils/adminRoutes";
+import { adminRoutes } from "../../../utils/app-utils/adminRoutes";
 import Logout from "@mui/icons-material/Logout";
 
-
-export default function AquabisSidebar(props: any) {
+export const AquabisSidebar = (props: any) => {
   const router = useNavigate();
   const location = useLocation();
 
@@ -70,8 +69,7 @@ export default function AquabisSidebar(props: any) {
 
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName: any) {
-    return routeName === location.pathname
-      
+    return routeName === location.pathname;
   }
 
   const handleResize = () => {
@@ -104,9 +102,7 @@ export default function AquabisSidebar(props: any) {
             });
 
             const whiteFontClasses = classNames({
-              ["selectedItemIcon" + " " + "whiteFont"]: activeRoute(
-                route.path
-              ),
+              ["selectedItemIcon" + " " + "whiteFont"]: activeRoute(route.path),
             });
 
             const hasChildren = route?.children && route?.children?.length > 0;
@@ -161,10 +157,13 @@ export default function AquabisSidebar(props: any) {
                     </AccordionDetails>
                   </Accordion>
                 ) : (
-                  <Link to={route.path} className={"item" + listItemClasses} key={key}>
+                  <Link
+                    to={route.path}
+                    className={"item" + listItemClasses}
+                    key={key}
+                  >
                     <div
                       key={key}
-                      
                       onClick={() =>
                         device === "mobile" && props.handleDrawerToggle()
                       }
@@ -305,7 +304,7 @@ export default function AquabisSidebar(props: any) {
           primary={"Settings"}
           className={classNames("itemText", {
             ["selectedItemIcon" + " " + "whiteFont"]:
-            activeRoute("/admin/settings"),
+              activeRoute("/admin/settings"),
           })}
           disableTypography={true}
         />

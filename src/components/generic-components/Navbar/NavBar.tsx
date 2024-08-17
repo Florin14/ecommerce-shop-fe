@@ -23,6 +23,7 @@ export const NavBar: React.FC = () => {
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
 
   // const dispatch = useAppDispatch()
+  const user = localStorage.getItem("user");
   const navigate = useNavigate();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -51,7 +52,7 @@ export const NavBar: React.FC = () => {
   // };
 
   return (
-    <Container>
+    <Container className="navbar-wrapper">
       {isMatch ? (
         <>
           <StyledIconButton size="large" onClick={() => {}}>
@@ -61,36 +62,46 @@ export const NavBar: React.FC = () => {
           <DrawerComp />
         </>
       ) : (
-        <NavContainer>
-          <LeftSection>
-            <FancyText variant="h5">Colectivistii</FancyText>
+        <NavContainer className="navbar-container">
+          <LeftSection className="navbar-left-section">
+            {/* <FancyText variant="h5">Colectivistii</FancyText> */}
           </LeftSection>
           {/* <SearchBar /> */}
-          <RightSection>
-            <Tooltip title="Notifications">
-              <ButtonWrapper>
-                <StyledIconButton
-                  size="large"
-                  onClick={openNotificationsMenu}
-                  disabled
-                >
-                  <NotificationsIcon />
+          <RightSection className="navbar-right-section">
+            <RightButtonsSection>
+              <Tooltip title="Notifications">
+                <ButtonWrapper>
+                  <StyledIconButton
+                    size="large"
+                    onClick={openNotificationsMenu}
+                    // disabled
+                  >
+                    <NotificationsIcon />
+                  </StyledIconButton>
+                </ButtonWrapper>
+              </Tooltip>
+              <Tooltip title="Messages">
+                <StyledIconButton size="large" onClick={openMessagesMenu}>
+                  <MailIcon />
                 </StyledIconButton>
-              </ButtonWrapper>
-            </Tooltip>
-            <Tooltip title="Messages">
-              <StyledIconButton size="large" onClick={openMessagesMenu}>
-                <MailIcon />
-              </StyledIconButton>
-            </Tooltip>
-            <Tooltip title="Sign out">
-              <StyledIconButton
-                size="large"
-                onClick={() => navigate("/logout")}
-              >
-                <LogoutIcon />
-              </StyledIconButton>
-            </Tooltip>
+              </Tooltip>
+              {!user && (
+                <Tooltip title="Sign out">
+                  <StyledIconButton
+                    size="large"
+                    onClick={() => navigate("/logout")}
+                  >
+                    <LogoutIcon />
+                  </StyledIconButton>
+                </Tooltip>
+              )}
+            </RightButtonsSection>
+            <SignupButton onClick={() => navigate("/register")}>
+              Inscrieti-va
+            </SignupButton>
+            <LoginButton onClick={() => navigate("/login")}>
+              Intrati in cont
+            </LoginButton>
           </RightSection>
         </NavContainer>
       )}
@@ -123,20 +134,20 @@ export const NavBar: React.FC = () => {
 };
 
 const Container = styled("div")`
-  width: calc(100% - 260px);
-  height: 60px;
-  // background: ${(props) => props.theme.palette.secondary.main};
-  background: white;
+  width: 100%;
+  height: 70px;
+  // background: #303030;
+  // background: black;
   color: #777;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   font-weight: bold;
   text-align: center;
+
+  top: 10px;
   position: fixed;
   z-index: 2;
-  // padding: 0 5%;
-  left: 260px;
   @media screen and (max-width: 960px) {
     width: 100%;
     left: 0;
@@ -145,16 +156,19 @@ const Container = styled("div")`
 
 const NavContainer = styled("div")`
   display: flex;
-  width: 100%;
-  justify-content: space-around;
+  width: 90%;
+  justify-content: space-between;
   height: inherit;
   align-items: center;
+  background: black;
+  border-radius: 10px;
+  padding: 0px 20px;
 `;
 
 const FancyText = styled(Typography)`
   display: flex;
   font-family: "PT Sans", cursive;
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.common.white};
   font-weight: bold;
   justify-content: center;
 `;
@@ -163,8 +177,10 @@ const RightSection = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: inherit;
+  // height: inherit;
+  gap: 30px;
   order: 3;
+  // background: #303030;
 `;
 
 const LeftSection = styled("div")`
@@ -174,10 +190,34 @@ const LeftSection = styled("div")`
   height: inherit;
   order: 1;
   gap: 20px;
+  background: #303030;
+  border-radius: 10px;
+  // padding: 0 10px;
 `;
 
 const StyledIconButton = styled(IconButton)`
-  color: #000;
+  color: white;
 `;
 
 const ButtonWrapper = styled("span")``;
+
+const RightButtonsSection = styled("div")``;
+
+const LoginButton = styled("button")`
+  color: #11998e;
+  font-size: 14px;
+  border: 1px solid #11998e;
+  background: transparent;
+  padding: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+`;
+
+const SignupButton = styled("button")`
+  color: white;
+  font-size: 14px;
+  background: transparent;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+`;

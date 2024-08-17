@@ -1,12 +1,13 @@
 import React from "react";
 import "./PaymentCard.css";
+import laplace from "../../../assets/laplace.svg"
 
 export const PaymentCard: React.FC = () => {
   return (
     <div className="card">
       <div className="card__inner">
         <div className="card__front">
-          <img src="/assets/laplace.svg" alt="Laplace" className="logo" />
+          <img src={laplace} alt="Laplace" className="logo" />
           <div className="chip">
             <div className="chip-line"></div>
             <div className="chip-line"></div>

@@ -1,0 +1,62 @@
+.slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    width: 125px;
+    height: 130px;
+    cursor: pointer;
+  }
+  
+  .status-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #dbdbdb;
+    height: 87px;
+    width: 87px;
+    border-radius: 100%;
+    margin: auto;
+    padding: 0;
+  }
+  
+  .status-pic {
+    border-radius: 50%;
+    width: 77px;
+    height: 77px;
+  }
+  
+  .username {
+    text-transform: capitalize;
+    padding: 15px 0px 0px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #262626;
+    text-align: center;
+  }
+  
+  .circle {
+    position: absolute;
+    top: 45%;
+    right: 100%;
+    height: 24px;
+    width: 24px;
+    color: rgb(125, 125, 125);
+    opacity: 0.7;
+    line-height: 18px;
+    cursor: pointer;
+  }
+  
+  .chevron {
+    position: absolute;
+    top: 45%;
+    left: 99%;
+    height: 24px;
+    width: 24px;
+    color: rgb(125, 125, 125);
+    opacity: 0.7;
+    line-height: 18px;
+    cursor: pointer;
+  }
+  

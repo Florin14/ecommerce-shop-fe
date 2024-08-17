@@ -14,8 +14,13 @@ import { theme } from "./utils/theme";
 import { Snackbar } from "./components/generic-components/Snackbar";
 import { Layout } from "./containers";
 import { NotFound } from "./containers/NotFound";
-import Axios from "axios";
-import ErrorHandler from "./utils/ErrorHandler";
+import ProductDetailPage from "./components/pages/ProductDetailPage/ProductDetailPage";
+
+const LoginPage = React.lazy(() => import("./components/Login/LoginPage"));
+
+const RegisterPage = React.lazy(
+  () => import("./components/Login/RegisterPage")
+);
 
 const WelcomePage = React.lazy(
   () => import("./components/pages/Welcome/WelcomePage")
@@ -41,6 +46,8 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      { path: "/login", element: <LoginPage /> },
+      { path: "/register", element: <RegisterPage /> },
       {
         path: "/profile",
         element: <ProfilePage />,
@@ -56,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/brands",
         element: <BrandsPage />,
+      },
+      {
+        path: "/admin/products/:productId",
+        element: <ProductDetailPage />, // Replace with the actual component for product details
       },
       // {
       //   path: '/logout',
