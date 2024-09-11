@@ -46,8 +46,6 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/login", element: <LoginPage /> },
-      { path: "/register", element: <RegisterPage /> },
       {
         path: "/profile",
         element: <ProfilePage />,
@@ -74,10 +72,11 @@ const router = createBrowserRouter([
       // },
     ],
   },
+  { path: "/register", element: <RegisterPage /> },
   {
     path: "/",
     element: (
-      <AlreadyAuth redirectTo={"/profile"}>
+      <AlreadyAuth redirectTo={"/admin/products"}>
         <LoadingScreen>
           <WelcomePage />
         </LoadingScreen>

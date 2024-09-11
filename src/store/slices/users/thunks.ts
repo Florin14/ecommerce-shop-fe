@@ -72,3 +72,23 @@ export const updateCategory = createAsyncThunk(
     }
   }
 );
+
+export const login = createAsyncThunk(
+  "login",
+  async ( { email, password }: {email: string; password: string }, thunkAPI) => {
+    const options = {
+      url: `/api/login`,
+      method: "POST",
+      data: {email, password},
+    };
+    try {
+      const response = await Axios(options);
+      return true;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        error: true,
+        message: "SomethingWentWrong",
+      });
+    }
+  }
+);

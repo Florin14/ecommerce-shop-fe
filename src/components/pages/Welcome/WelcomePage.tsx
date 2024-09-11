@@ -49,10 +49,8 @@ const WelcomePage: React.FC = () => {
       {/* </LeftSection> */}
       <RightSection>
         <Layer visible={mode === Mode.LOGIN}>
-          {/* <LoginForm registerClick={() => setMode(Mode.REGISTER)} /> */}
-          {/* <Login/> */}
-          {/* <Sidebar2 /> */}
-          {/* <Sidebar3/> */}
+          <LoginForm registerClick={() => setMode(Mode.REGISTER)} />
+         
         </Layer>
         {/* <Layer visible={mode === Mode.REGISTER}>
           <RegistrationForm loginClick={() => setMode(Mode.LOGIN)} />
