@@ -32,6 +32,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import TuneIcon from "@mui/icons-material/Tune";
 import { ProductsSortSelect } from "../../generic-components/ProductsSortSelect";
 import { ProductsDrawer } from "../../generic-components/ProductsDrawer";
+import Banner from "../../generic-components/Banner";
 
 const filtersOptions = [
   { id: 1, name: "Pret crescator", sortBy: "price", sortType: "asc" },
@@ -91,6 +92,7 @@ const ProductsPage: React.FC = () => {
       >
         <AddIcon /> Create Product
       </CreateProductButton>
+      <Banner/>
       {/* <FiltersSection>
         <FiltersList>
           <Button onClick={toggleDrawer(true)}>
