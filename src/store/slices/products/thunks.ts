@@ -27,7 +27,7 @@ export const getProductsResources = createAsyncThunk(
 
 export const getProducts = createAsyncThunk(
   "getProducts",
-  async ({ sortBy = null, sortType = null }, thunkAPI) => {
+  async ({ sortBy = null, sortType = null } :{ sortBy: string | null, sortType: string | null}, thunkAPI) => {
     const options = {
       url: `/api/products`,
       method: "GET",
@@ -60,7 +60,7 @@ export const addProducts = createAsyncThunk(
       genderId,
       sku,
       images,
-    },
+    }:{ name: string, description: string, price: string, productStock: string, brandId: string, categoryId: string, genderId: string, sku: any, images: any},
     thunkAPI
   ) => {
     const formData = new FormData();
@@ -75,7 +75,7 @@ export const addProducts = createAsyncThunk(
     formData.append("sku", sku);
 
     // Append files
-    images.forEach((image, index) => {
+    images.forEach((image: any, index: number) => {
       formData.append(`images[${index}]`, image);
     });
 
@@ -105,7 +105,7 @@ export const addProducts = createAsyncThunk(
 
 export const getProductDetails = createAsyncThunk(
   "getProductDetails",
-  async ({ id }, thunkAPI) => {
+  async ({ id } : { id: number}, thunkAPI) => {
     const options = {
       url: `/api/products/${id}`,
       method: "GET",

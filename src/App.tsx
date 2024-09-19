@@ -39,6 +39,10 @@ const CategoriesPage = React.lazy(
 const BrandsPage = React.lazy(
   () => import("./components/pages/BrandsPage/Brands")
 );
+
+const UserPage = React.lazy(
+  () => import("./components/pages/UserPage/User")
+);
 // const AssignmentsPage = React.lazy(() => import('../assignments/AssignmentsPage'))
 // const AnnouncementsPage = React.lazy(() => import('../announcements/AnnouncementsPage'))
 
@@ -61,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/brands",
         element: <BrandsPage />,
+      },
+      {
+        path: "/admin/users",
+        element: <UserPage />,
       },
       {
         path: "/admin/products/:productId",
