@@ -77,12 +77,7 @@ const ProductsPage: React.FC = () => {
     };
 
   return (
-    <Container className="products-page-container">
-      {/* {searchDone && (
-        <Button onClick={() => dispatch(fetchAnnouncements())} color="secondary">
-          Back to all announcements
-        </Button>
-      )} */}
+    <Container>
       <Title variant="overline">Products</Title>
 
       <CreateProductButton
@@ -93,7 +88,7 @@ const ProductsPage: React.FC = () => {
         <AddIcon /> Create Product
       </CreateProductButton>
       <Banner/>
-      {/* <FiltersSection>
+      <FiltersSection>
         <FiltersList>
           <Button onClick={toggleDrawer(true)}>
             Filtre <TuneIcon />
@@ -102,7 +97,7 @@ const ProductsPage: React.FC = () => {
           <ProductsDrawer isOpen={isOpen} toggleDrawer={toggleDrawer} />
         </FiltersList>
         <Sorting>Ordoneaza: </Sorting>
-      </FiltersSection> */}
+      </FiltersSection>
       <ProductsSection>
         {products?.map((product: ProductResponseDTO) => (
           <ProductCard
@@ -124,13 +119,6 @@ const ProductsPage: React.FC = () => {
         onClose={handleCloseCreateProduct}
         // announcement={updatedAnnouncement}
       />
-      {/* <Tabs value={selectedCategory} onChange={handleCategorySelection} indicatorColor="secondary">
-        <StyledTab label="Feed" aria-selected={AnnouncementCategory.FEED === selectedCategory} />
-        {role === Role.MENTOR && (
-          <StyledTab label="Your's" aria-selected={AnnouncementCategory.FOLLOWED === selectedCategory} />
-        )}
-      </Tabs> */}
-      {/* {[announcementsData, myAnnouncements].map(renderAnnouncements)} */}
     </Container>
   );
 };
