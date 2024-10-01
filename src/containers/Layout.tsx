@@ -10,7 +10,7 @@ import { styled } from "@mui/material";
 import { NavBar } from "../components/generic-components/Navbar";
 import { LoadingScreen } from "../utils/app-utils";
 import { AquabisSidebar } from "../components/generic-components/Sidebar/AquabisSidebar";
-
+// import NavbarAdmin from "../components/generic-components/NavbarTop";
 export const Layout: React.FC = () => {
   // const dispatch = useAppDispatch()
   // const userData = useAppSelector(selectUserData)
@@ -51,6 +51,7 @@ export const Layout: React.FC = () => {
           />
           <Content className="content">
             {/* <NavBar /> */}
+            <NavbarAdmin />
             <Outlet />
           </Content>
         </Container>
