@@ -10,6 +10,7 @@ import { styled } from "@mui/material";
 import { NavBar } from "../components/generic-components/Navbar";
 import { LoadingScreen } from "../utils/app-utils";
 import { AquabisSidebar } from "../components/generic-components/Sidebar/AquabisSidebar";
+import AppleStore from "../components/pages/AppleStore/AppleStore";
 // import NavbarAdmin from "../components/generic-components/NavbarTop";
 export const Layout: React.FC = () => {
   // const dispatch = useAppDispatch()
@@ -44,16 +45,15 @@ export const Layout: React.FC = () => {
     <LoadingScreen>
       <Page>
         <Container>
-          <AquabisSidebar
+          {/* <AquabisSidebar
             handleDrawerToggle={handleDrawerToggle}
             open={mobileOpen}
-            // menuMinHeight={960}
           />
           <Content className="content">
-            {/* <NavBar /> */}
-            <NavbarAdmin />
+            <NavBar />
             <Outlet />
-          </Content>
+          </Content> */}
+          <AppleStore />
         </Container>
       </Page>
     </LoadingScreen>
