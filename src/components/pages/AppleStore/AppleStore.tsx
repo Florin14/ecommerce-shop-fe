@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import styled from 'styled-components'
 import {
   Search,
@@ -12,6 +12,10 @@ import {
   Settings,
 } from "lucide-react";
 import { styled } from "@mui/material";
+import V0Sidebar from "../../generic-components/V0Sidebar/V0Sidebar";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { RootState } from "../../../store";
+import { getProducts } from "../../../store/slices/products/thunks";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -32,46 +36,11 @@ const Container = styled("div")`
   min-height: 100vh;
 `;
 
-const Sidebar = styled('aside')`
-  width: 250px;
-  padding: 2rem;
-  border-right: 1px solid #333;
-`;
-
-const CategoryTitle = styled('h2')`
-  font-size: 1rem;
-  color: #999;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-`;
-
-const CategoryList = styled('ul')`
-  list-style-type: none;
-  padding: 0;
-  margin: 0 0 2rem 0;
-`;
-
-const CategoryItem = styled('li')<{active?: boolean}>`
-  margin-bottom: 0.5rem;
-  color: ${(props) => (props.active ? "#fff" : "#999")};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    color: #fff;
-  }
-`;
-
-const Checkbox = styled('input')`
-  margin-right: 0.5rem;
-`;
-
-const MainContent = styled('main')`
+const MainContent = styled("main")`
   flex: 1;
 `;
 
-const Header = styled('header')`
+const Header = styled("header")`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,7 +62,7 @@ const SearchBar = styled("div")`
   width: 300px;
 `;
 
-const SearchInput = styled('input')`
+const SearchInput = styled("input")`
   background: none;
   border: none;
   color: #fff;
@@ -111,7 +80,7 @@ const HeaderIcons = styled("div")`
   align-items: center;
 `;
 
-const WalletInfo = styled('span')`
+const WalletInfo = styled("span")`
   margin-right: 1rem;
 `;
 
@@ -127,7 +96,7 @@ const UserAvatar = styled("div")`
   position: relative;
 `;
 
-const UserMenu = styled("div")<{isOpen: boolean}>`
+const UserMenu = styled("div")<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
   right: 0;
@@ -137,7 +106,7 @@ const UserMenu = styled("div")<{isOpen: boolean}>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
 `;
 
-const UserMenuItem = styled('button')`
+const UserMenuItem = styled("button")`
   display: flex;
   align-items: center;
   background: none;
@@ -163,13 +132,13 @@ const InfoHeader = styled("div")`
   color: #999;
 `;
 
-const Breadcrumb = styled('nav')`
+const Breadcrumb = styled("nav")`
   display: flex;
   align-items: center;
   gap: 0.5rem;
 `;
 
-const BreadcrumbItem = styled('a')`
+const BreadcrumbItem = styled("a")`
   color: #999;
   text-decoration: none;
 
@@ -183,7 +152,7 @@ const BreadcrumbItem = styled('a')`
   }
 `;
 
-const BreadcrumbSeparator = styled('span')`
+const BreadcrumbSeparator = styled("span")`
   color: #666;
 `;
 
@@ -208,19 +177,19 @@ const ProfileInfo = styled("div")`
   flex: 1;
 `;
 
-const ProfileName = styled('h2')`
+const ProfileName = styled("h2")`
   margin: 0;
   font-size: 1.2rem;
   display: flex;
   align-items: center;
 `;
 
-const VerifiedBadge = styled('span')`
+const VerifiedBadge = styled("span")`
   color: #1da1f2;
   margin-left: 0.5rem;
 `;
 
-const ProfileLocation = styled('p')`
+const ProfileLocation = styled("p")`
   margin: 0.5rem 0;
   color: #999;
 `;
@@ -231,7 +200,7 @@ const ProfileStats = styled("div")`
   margin-top: 0.5rem;
 `;
 
-const Stat = styled('span')`
+const Stat = styled("span")`
   color: #999;
 `;
 
@@ -240,7 +209,7 @@ const ActionButtons = styled("div")`
   gap: 0.5rem;
 `;
 
-const Button =styled('button')`
+const Button = styled("button")`
   background-color: #3a3a3a;
   color: #fff;
   border: none;
@@ -267,13 +236,13 @@ const ProductCard = styled("div")`
   position: relative;
 `;
 
-const ProductImage = styled('img')`
+const ProductImage = styled("img")`
   width: 100%;
   height: 200px;
   object-fit: cover;
 `;
 
-const WishlistButton = styled('button')`
+const WishlistButton = styled("button")`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -287,12 +256,12 @@ const ProductInfo = styled("div")`
   padding: 1rem;
 `;
 
-const ProductName = styled('h3')`
+const ProductName = styled("h3")`
   margin: 0;
   font-size: 1rem;
 `;
 
-const ProductPrice = styled('p')`
+const ProductPrice = styled("p")`
   margin: 0.5rem 0;
   font-weight: bold;
 `;
@@ -305,85 +274,38 @@ const ProductActions = styled("div")`
 
 const AppleStore = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    living: false,
-    auto: false,
-    gadget: true,
-  });
+  const sortBy = useAppSelector((state: RootState) => state.products.sortBy);
 
-  const toggleFilter = (filter: any) => {
-    // setFilters((prev) => ({ ...prev, [filter]: !prev[filter] }));
-  };
-
+  const sortType = useAppSelector(
+    (state: RootState) => state.products.sortType
+  );
   const handleUserMenuClick = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(
+    (state: RootState) => state.products.products
+  );
 
   const handleLogout = () => {
     // Implement logout functionality
-    console.log("Logging out...");
   };
 
   const handleProfile = () => {
     // Navigate to profile page
-    console.log("Navigating to profile...");
   };
 
   const handleOrders = () => {
     // Navigate to orders page
-    console.log("Navigating to orders...");
   };
+
+  useEffect(() => {
+    dispatch(getProducts({ sortBy, sortType }));
+  }, []);
 
   return (
     <Container>
-      <Sidebar>
-        <CategoryTitle>Category</CategoryTitle>
-        <CategoryList>
-          <CategoryItem>
-            <Checkbox
-              type="checkbox"
-              checked={filters.living}
-              onChange={() => toggleFilter("living")}
-            />
-            Living
-          </CategoryItem>
-          <CategoryItem>
-            <Checkbox
-              type="checkbox"
-              checked={filters.auto}
-              onChange={() => toggleFilter("auto")}
-            />
-            Auto
-          </CategoryItem>
-          <CategoryItem active={true}>
-            <Checkbox
-              type="checkbox"
-              checked={filters.gadget}
-              onChange={() => toggleFilter("gadget")}
-            />
-            Gadget
-          </CategoryItem>
-        </CategoryList>
-        <CategoryTitle>Price</CategoryTitle>
-        <CategoryList>
-          <CategoryItem>
-            <Checkbox type="checkbox" />
-            $0 - $500
-          </CategoryItem>
-          <CategoryItem>
-            <Checkbox type="checkbox" />
-            $501 - $1000
-          </CategoryItem>
-          <CategoryItem>
-            <Checkbox type="checkbox" />
-            $1001 - $2000
-          </CategoryItem>
-          <CategoryItem>
-            <Checkbox type="checkbox" />
-            $2001+
-          </CategoryItem>
-        </CategoryList>
-      </Sidebar>
+      <V0Sidebar />
       <MainContent>
         <Header>
           <Logo>GARTEX</Logo>
@@ -548,7 +470,6 @@ const AppleStore = () => {
       </MainContent>
     </Container>
   );
-}
-
+};
 
 export default AppleStore;

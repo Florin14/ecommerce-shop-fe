@@ -77,7 +77,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
   );
 
   const onPasswordChange = (value: string) => {
-    console.log(value);
     setPassword(value);
 
     let upperCaseState = false;
