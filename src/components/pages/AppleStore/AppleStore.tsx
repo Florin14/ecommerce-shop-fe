@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-// import styled from 'styled-components'
-import {
-  Search,
-  ShoppingCart,
-  Heart,
-  User,
-  ChevronDown,
-  Check,
-  LogOut,
-  FileText,
-  Settings,
-} from "lucide-react";
+import { Heart, Check } from "lucide-react";
 import { styled } from "@mui/material";
 import V0Sidebar from "../../generic-components/V0Sidebar/V0Sidebar";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store";
 import { getProducts } from "../../../store/slices/products/thunks";
+import V0Navbar from "../../generic-components/V0Navbar/V0Navbar";
+import V0Breadcrumb from "../../generic-components/VOBreadcrumb/V0Breadcrumb";
+import V0StoreProfile from "../../generic-components/V0StoreProfile/V0StoreProfile";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -40,173 +32,11 @@ const MainContent = styled("main")`
   flex: 1;
 `;
 
-const Header = styled("header")`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #333;
-`;
-
-const Logo = styled("div")`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const SearchBar = styled("div")`
-  display: flex;
-  align-items: center;
-  background-color: #2a2a2a;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  width: 300px;
-`;
-
-const SearchInput = styled("input")`
-  background: none;
-  border: none;
-  color: #fff;
-  width: 100%;
-  margin-left: 0.5rem;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const HeaderIcons = styled("div")`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-`;
-
-const WalletInfo = styled("span")`
-  margin-right: 1rem;
-`;
-
-const UserAvatar = styled("div")`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #4a4a4a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-`;
-
-const UserMenu = styled("div")<{ isOpen: boolean }>`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #2a2a2a;
-  border-radius: 4px;
-  padding: 0.5rem;
-  display: ${(props) => (props.isOpen ? "block" : "none")};
-`;
-
-const UserMenuItem = styled("button")`
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  color: #fff;
-  padding: 0.5rem;
-  width: 100%;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3a3a3a;
-  }
-
-  svg {
-    margin-right: 0.5rem;
-  }
-`;
-
 const InfoHeader = styled("div")`
   background-color: #2a2a2a;
   padding: 0.5rem 2rem;
   font-size: 0.9rem;
   color: #999;
-`;
-
-const Breadcrumb = styled("nav")`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const BreadcrumbItem = styled("a")`
-  color: #999;
-  text-decoration: none;
-
-  &:hover {
-    color: #fff;
-  }
-
-  &:last-child {
-    color: #fff;
-    pointer-events: none;
-  }
-`;
-
-const BreadcrumbSeparator = styled("span")`
-  color: #666;
-`;
-
-const StoreProfile = styled("div")`
-  display: flex;
-  padding: 2rem;
-  border-bottom: 1px solid #333;
-`;
-
-const ProfileImage = styled("div")`
-  width: 64px;
-  height: 64px;
-  background-color: #fff;
-  border-radius: 50%;
-  margin-right: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProfileInfo = styled("div")`
-  flex: 1;
-`;
-
-const ProfileName = styled("h2")`
-  margin: 0;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-`;
-
-const VerifiedBadge = styled("span")`
-  color: #1da1f2;
-  margin-left: 0.5rem;
-`;
-
-const ProfileLocation = styled("p")`
-  margin: 0.5rem 0;
-  color: #999;
-`;
-
-const ProfileStats = styled("div")`
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-`;
-
-const Stat = styled("span")`
-  color: #999;
-`;
-
-const ActionButtons = styled("div")`
-  display: flex;
-  gap: 0.5rem;
 `;
 
 const Button = styled("button")`
@@ -273,31 +103,16 @@ const ProductActions = styled("div")`
 `;
 
 const AppleStore = () => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const sortBy = useAppSelector((state: RootState) => state.products.sortBy);
 
   const sortType = useAppSelector(
     (state: RootState) => state.products.sortType
   );
-  const handleUserMenuClick = () => {
-    setIsUserMenuOpen(!isUserMenuOpen);
-  };
+
   const dispatch = useAppDispatch();
   const products = useAppSelector(
     (state: RootState) => state.products.products
   );
-
-  const handleLogout = () => {
-    // Implement logout functionality
-  };
-
-  const handleProfile = () => {
-    // Navigate to profile page
-  };
-
-  const handleOrders = () => {
-    // Navigate to orders page
-  };
 
   useEffect(() => {
     dispatch(getProducts({ sortBy, sortType }));
@@ -307,80 +122,13 @@ const AppleStore = () => {
     <Container>
       <V0Sidebar />
       <MainContent>
-        <Header>
-          <Logo>GARTEX</Logo>
-          <SearchBar>
-            <Search size={18} />
-            <SearchInput placeholder="Search" />
-          </SearchBar>
-          <HeaderIcons>
-            <WalletInfo>Money: $2,250,100.00</WalletInfo>
-            <Heart />
-            <ShoppingCart />
-            <UserAvatar onClick={handleUserMenuClick}>
-              <User size={18} />
-              <UserMenu isOpen={isUserMenuOpen}>
-                <UserMenuItem onClick={handleProfile}>
-                  <Settings size={16} />
-                  Profile
-                </UserMenuItem>
-                <UserMenuItem onClick={handleOrders}>
-                  <FileText size={16} />
-                  Orders
-                </UserMenuItem>
-                <UserMenuItem onClick={handleLogout}>
-                  <LogOut size={16} />
-                  Logout
-                </UserMenuItem>
-              </UserMenu>
-            </UserAvatar>
-          </HeaderIcons>
-        </Header>
-
+        <V0Navbar />
         <InfoHeader>
-          <Breadcrumb>
-            <BreadcrumbItem href="#">Category</BreadcrumbItem>
-            <BreadcrumbSeparator>&gt;</BreadcrumbSeparator>
-            <BreadcrumbItem href="#">Homepage</BreadcrumbItem>
-            <BreadcrumbSeparator>&gt;</BreadcrumbSeparator>
-            <BreadcrumbItem href="#">Gadget</BreadcrumbItem>
-            <BreadcrumbSeparator>&gt;</BreadcrumbSeparator>
-            <BreadcrumbItem href="#">Apple Official Store</BreadcrumbItem>
-          </Breadcrumb>
+          <V0Breadcrumb />
         </InfoHeader>
 
-        <StoreProfile>
-          <ProfileImage>
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apple-logo-white-8Uh4lWtGob2wQIxqtYy8facEflTXIv.png"
-              alt="Apple logo"
-              width="48"
-              height="48"
-            />
-          </ProfileImage>
-          <ProfileInfo>
-            <ProfileName>
-              Apple Official Store
-              <VerifiedBadge>
-                <Check size={16} />
-              </VerifiedBadge>
-            </ProfileName>
-            <ProfileLocation>San Francisco</ProfileLocation>
-            <ProfileStats>
-              <Stat>Products: 100</Stat>
-              <Stat>Followers: 500.13k</Stat>
-              <Stat>Rating: 4.9 (10.2k Reviews)</Stat>
-              <Stat>Joined: 9 years ago</Stat>
-              <Stat>Chat Performance: 99%</Stat>
-            </ProfileStats>
-          </ProfileInfo>
-          <ActionButtons>
-            <Button>Follow</Button>
-            <Button>Chat</Button>
-            <Button>Shop Info</Button>
-          </ActionButtons>
-        </StoreProfile>
-
+        <V0StoreProfile />
+        
         <ProductGrid>
           {[
             {
