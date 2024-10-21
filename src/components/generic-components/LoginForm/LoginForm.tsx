@@ -12,7 +12,7 @@ import { Link as MuiLink } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "axios";
-import { login } from "../../../store/slices/users/thunks";
+import { authenticateUser, login } from "../../../store/slices/users/thunks";
 
 // import { useAppDispatch } from '../../../redux/hooks'
 // import { User } from '../../../types/User'
@@ -46,12 +46,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ registerClick }) => {
   // Note: handleRegistrationSubmit accepts formData as a parameter
   const handleLoginSubmit: SubmitHandler<Login> = async (formData) => {
     // const data = { email: email, password: password };
-    dispatch(login({ email: formData.email, password: formData.password }));
+    // dispatch(login({ email: formData.email, password: formData.password }));
     // API call to '/login'
-    // dispatch(authenticateUser(formData)).then(() => {
-    //   dispatch(resetAuthState())
-    //   navigate(paths.PROFILE)
-    // })
+    dispatch(authenticateUser(formData)).then(() => {
+      // dispatch(resetAuthState())
+      // navigate(paths.PROFILE)
+    })
   };
 
   const goToRegister = () => {
