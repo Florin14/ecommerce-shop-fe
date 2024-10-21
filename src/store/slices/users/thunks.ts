@@ -92,3 +92,43 @@ export const login = createAsyncThunk(
     }
   }
 );
+export interface LoginUserDTO {
+  email: string
+  password: string
+}
+
+export interface LoginResponseBody {
+  value: string // JWT token
+  email: string
+  authorities: string[]
+}
+
+import axios, { AxiosRequestConfig } from 'axios'
+import { AxiosResponse } from 'axios'
+
+const hostName = 'localhost'
+const port = 3000
+
+export const axiosInstance = axios.create({
+  baseURL: `http://${hostName}:${port}/api/`,
+  timeout: 2000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+  config.headers = { ...config.headers, Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
+
+  return config
+})
+
+
+// IMPORTANT: Sending an already existing JWT Token through 'Authorization' will result in 403 Forbidden Response
+export const loginCall = async (user: LoginUserDTO): Promise<AxiosResponse<LoginResponseBody>> =>
+  axiosInstance.post('/login', user, { headers: { Authorization: undefined } })
+
+
+export const authenticateUser = createAsyncThunk('authenticateUser', async (user: LoginUserDTO, { dispatch }) => {
+  const response = await loginCall(user)
+})

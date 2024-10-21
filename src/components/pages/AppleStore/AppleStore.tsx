@@ -126,68 +126,9 @@ const AppleStore = () => {
         <InfoHeader>
           <V0Breadcrumb />
         </InfoHeader>
-
         <V0StoreProfile />
-        
         <ProductGrid>
-          {[
-            {
-              name: "Macbook Pro M1 (2021)",
-              price: 2245.9,
-              originalPrice: 2339.9,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/macbook-pro-m1-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "Macbook Pro M2 (2022)",
-              price: 1299.0,
-              originalPrice: 1499.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/macbook-pro-m2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "iPhone 14 Pro",
-              price: 995.0,
-              originalPrice: 1099.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-14-pro-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "iPhone 14 Plus",
-              price: 899.0,
-              originalPrice: 999.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-14-plus-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "Airpods Pro 2",
-              price: 197.5,
-              originalPrice: 249.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/airpods-pro-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "iPad Pro 2 (2021)",
-              price: 753.0,
-              originalPrice: 799.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ipad-pro-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "iPhone SE Gen 2 (2022)",
-              price: 375.0,
-              originalPrice: 429.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-se-gen-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-            },
-            {
-              name: "Apple Watch Series 8",
-              price: 300.0,
-              originalPrice: 399.0,
-              image:
-                "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apple-watch-series-8-erwaMjtGob2wQIxqtYy8facEflT.jpg",
-            },
-          ].map((product, index) => (
+          {productsData.map((product, index) => (
             <ProductCard key={index}>
               <ProductImage src={product.image} alt={product.name} />
               <WishlistButton>
@@ -221,3 +162,62 @@ const AppleStore = () => {
 };
 
 export default AppleStore;
+
+const productsData = [
+  {
+    name: "Macbook Pro M1 (2021)",
+    price: 2245.9,
+    originalPrice: 2339.9,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/macbook-pro-m1-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "Macbook Pro M2 (2022)",
+    price: 1299.0,
+    originalPrice: 1499.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/macbook-pro-m2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "iPhone 14 Pro",
+    price: 995.0,
+    originalPrice: 1099.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-14-pro-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "iPhone 14 Plus",
+    price: 899.0,
+    originalPrice: 999.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-14-plus-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "Airpods Pro 2",
+    price: 197.5,
+    originalPrice: 249.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/airpods-pro-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "iPad Pro 2 (2021)",
+    price: 753.0,
+    originalPrice: 799.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ipad-pro-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "iPhone SE Gen 2 (2022)",
+    price: 375.0,
+    originalPrice: 429.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-se-gen-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
+  },
+  {
+    name: "Apple Watch Series 8",
+    price: 300.0,
+    originalPrice: 399.0,
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apple-watch-series-8-erwaMjtGob2wQIxqtYy8facEflT.jpg",
+  },
+];
