@@ -32,7 +32,7 @@ export const getCategories = createAsyncThunk(
 
 export const addCategory = createAsyncThunk(
   "addCategory",
-  async ( name , thunkAPI) => {
+  async (name, thunkAPI) => {
     const options = {
       url: `/api/category`,
       method: "POST",
@@ -75,11 +75,14 @@ export const updateCategory = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "login",
-  async ( { email, password }: {email: string; password: string }, thunkAPI) => {
+  async (
+    { email, password }: { email: string; password: string },
+    thunkAPI
+  ) => {
     const options = {
       url: `/api/login`,
       method: "POST",
-      data: {email, password},
+      data: { email, password },
     };
     try {
       const response = await Axios(options);
@@ -93,42 +96,71 @@ export const login = createAsyncThunk(
   }
 );
 export interface LoginUserDTO {
-  email: string
-  password: string
+  email: string;
+  password: string;
+}
+
+export interface RegisterUserDTO {
+  firstName: string;
+  lastName: string;
+  password: string;
+  email: string;
+}
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  password: string;
+  confirmPassword: string;
+  email: string;
 }
 
 export interface LoginResponseBody {
-  value: string // JWT token
-  email: string
-  authorities: string[]
+  value: string; // JWT token
+  email: string;
+  authorities: string[];
 }
 
-import axios, { AxiosRequestConfig } from 'axios'
-import { AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig } from "axios";
+import { AxiosResponse } from "axios";
 
-const hostName = 'localhost'
-const port = 3000
+const hostName = "localhost";
+const port = 3000;
 
 export const axiosInstance = axios.create({
   baseURL: `http://${hostName}:${port}/api/`,
   timeout: 2000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
-})
+});
 
 axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.headers = { ...config.headers, Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
+  config.headers = {
+    ...config.headers,
+    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+  };
 
-  return config
-})
-
+  return config;
+});
 
 // IMPORTANT: Sending an already existing JWT Token through 'Authorization' will result in 403 Forbidden Response
-export const loginCall = async (user: LoginUserDTO): Promise<AxiosResponse<LoginResponseBody>> =>
-  axiosInstance.post('/login', user, { headers: { Authorization: undefined } })
+export const loginCall = async (
+  user: LoginUserDTO
+): Promise<AxiosResponse<LoginResponseBody>> =>
+  axiosInstance.post("/login", user, { headers: { Authorization: undefined } });
 
+export const authenticateUser = createAsyncThunk(
+  "authenticateUser",
+  async (user: LoginUserDTO, { dispatch }) => {
+    const response = await loginCall(user);
+  }
+);
 
-export const authenticateUser = createAsyncThunk('authenticateUser', async (user: LoginUserDTO, { dispatch }) => {
-  const response = await loginCall(user)
-})
+export const addUserCall = async (user: RegisterUserDTO): Promise<User> =>
+  axiosInstance.post("/register", user);
+
+export const addUser = createAsyncThunk(
+  "addUser",
+  async (user: RegisterUserDTO) => addUserCall(user)
+);

@@ -15,14 +15,11 @@ import Menu from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-// import { toggleSidebar } from '../../application/slice'
-// import { useAppDispatch } from '../../../redux/hooks'
 
 export const NavBar: React.FC = () => {
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
 
-  // const dispatch = useAppDispatch()
   const user = localStorage.getItem("user");
   const navigate = useNavigate();
   const theme = useTheme();
