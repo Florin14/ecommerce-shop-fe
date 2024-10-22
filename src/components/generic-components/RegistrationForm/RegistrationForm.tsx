@@ -21,14 +21,19 @@ import ClearIcon from "@mui/icons-material/Clear";
 // import { BaseUser, RegisterUserDTO, Role } from '../../../types/User'
 import { useAppDispatch } from "../../../store/hooks";
 import { useNavigate } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { addUser } from "../../../store/slices/users/thunks";
+
 // import { useAppDispatch } from '../../../redux/hooks'
 // import { addUser } from '../actions'
 // import { resetAuthState } from '../../application/slice'
 
 export type RegistrationFormType = {
+  firstName: string;
+  lastName: string;
   password: string;
   confirmPassword: string;
-  terms: boolean;
+  email: string;
 };
 
 interface RegistrationFormProps {
@@ -128,26 +133,27 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
 
   // Wire to backend endpoint using RTK (create a slice etc.)
   // Note: handleRegistrationSubmit accepts formData as a parameter
-  const handleRegistrationSubmit = () => {
+  const handleRegistrationSubmit = async () => {
     // transform Form Data into User object
-    // const userData = {
-    //   email: formData.email,
-    //   firstName: formData.firstName,
-    //   lastName: formData.lastName,
-    //   role: formData.role,
-    //   password: formData.password,
-    // };
-    // API call to '/register'
-    // dispatch(addUser(userData)).then(response => {
-    //   if (response.type === 'addUser/fulfilled') {
-    //     // empty all fields after submitting
-    //     resetForm()
-    //     // Move back to log in after successfully registering
-    //     loginClick()
-    //     // make sure to reset loading / complete status for registration action
-    //     // dispatch(resetAuthState())
-    //   }
-    // })
+    const userData = {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+    };
+
+    // // API call to '/register'
+    dispatch(addUser(userData)).then(response => {
+      console.log(response);
+      // if (response.type === 'addUser/fulfilled') {
+      //   // empty all fields after submitting
+      //   resetForm()
+      //   // Move back to log in after successfully registering
+      //   loginClick()
+      //   // make sure to reset loading / complete status for registration action
+      //   // dispatch(resetAuthState())
+      // }
+    })
   };
 
   const goToLogin = () => {
