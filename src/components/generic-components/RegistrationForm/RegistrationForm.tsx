@@ -144,7 +144,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
 
     // // API call to '/register'
     dispatch(addUser(userData)).then(response => {
-      console.log(response);
       // if (response.type === 'addUser/fulfilled') {
       //   // empty all fields after submitting
       //   resetForm()

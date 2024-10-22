@@ -1,8 +1,6 @@
 import React from "react";
 
 import { styled } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import Carousel from "../ImageCarousel/ImageCarousel";

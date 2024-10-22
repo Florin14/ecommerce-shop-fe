@@ -13,15 +13,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "axios";
 import { authenticateUser, login } from "../../../store/slices/users/thunks";
-
-// import { useAppDispatch } from '../../../redux/hooks'
-// import { User } from '../../../types/User'
-// import { authenticateUser } from '../actions'
-// import { resetAuthState } from '../../application/slice'
-// import { paths } from '../../../api'
-
-// export type LoginFormType = Pick<User, 'email'> & { password: string }
-
 interface LoginFormProps {
   registerClick: () => void;
 }
