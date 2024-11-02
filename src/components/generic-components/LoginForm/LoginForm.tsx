@@ -39,9 +39,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ registerClick }) => {
     // const data = { email: email, password: password };
     // dispatch(login({ email: formData.email, password: formData.password }));
     // API call to '/login'
-    dispatch(authenticateUser(formData)).then(() => {
+    dispatch(authenticateUser(formData)).then((res: any) => {
+      if (res.type.includes("fulfilled")) {
+        navigate("/admin/products");
+      }
       // dispatch(resetAuthState())
-      navigate("/admin/products")
     });
   };
 
