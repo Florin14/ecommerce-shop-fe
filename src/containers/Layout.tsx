@@ -48,12 +48,10 @@ export const Layout: React.FC = () => {
           {/* <AquabisSidebar
             handleDrawerToggle={handleDrawerToggle}
             open={mobileOpen}
-          />
-          <Content className="content">
-            <NavBar />
+          /> */}
+          <Content>
             <Outlet />
-          </Content> */}
-          <AppleStore />
+          </Content>
         </Container>
       </Page>
     </LoadingScreen>

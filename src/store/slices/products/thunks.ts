@@ -27,10 +27,19 @@ export const getProductsResources = createAsyncThunk(
 
 export const getProducts = createAsyncThunk(
   "getProducts",
-  async ({ sortBy = null, sortType = null } :{ sortBy: string | null, sortType: string | null}, thunkAPI) => {
+  async (
+    {
+      sortBy = null,
+      sortType = null,
+    }: { sortBy: string | null; sortType: string | null },
+    thunkAPI
+  ) => {
     const options = {
       url: `/api/products`,
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
       params: { sortBy, sortType },
     };
     try {
@@ -60,7 +69,17 @@ export const addProducts = createAsyncThunk(
       genderId,
       sku,
       images,
-    }:{ name: string, description: string, price: string, productStock: string, brandId: string, categoryId: string, genderId: string, sku: any, images: any},
+    }: {
+      name: string;
+      description: string;
+      price: string;
+      productStock: string;
+      brandId: string;
+      categoryId: string;
+      genderId: string;
+      sku: any;
+      images: any;
+    },
     thunkAPI
   ) => {
     const formData = new FormData();
@@ -105,7 +124,7 @@ export const addProducts = createAsyncThunk(
 
 export const getProductDetails = createAsyncThunk(
   "getProductDetails",
-  async ({ id } : { id: number}, thunkAPI) => {
+  async ({ id }: { id: number }, thunkAPI) => {
     const options = {
       url: `/api/products/${id}`,
       method: "GET",
