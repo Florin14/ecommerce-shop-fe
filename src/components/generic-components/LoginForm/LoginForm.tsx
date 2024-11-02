@@ -12,7 +12,7 @@ import { Link as MuiLink } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "axios";
-import { authenticateUser, login } from "../../../store/slices/users/thunks";
+import { authenticateUser } from "../../../store/slices/auth/actions";
 interface LoginFormProps {
   registerClick: () => void;
 }
@@ -41,8 +41,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ registerClick }) => {
     // API call to '/login'
     dispatch(authenticateUser(formData)).then(() => {
       // dispatch(resetAuthState())
-      // navigate(paths.PROFILE)
-    })
+      navigate("/admin/products")
+    });
   };
 
   const goToRegister = () => {

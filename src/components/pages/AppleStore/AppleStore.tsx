@@ -8,6 +8,7 @@ import { getProducts } from "../../../store/slices/products/thunks";
 import V0Navbar from "../../generic-components/V0Navbar/V0Navbar";
 import V0Breadcrumb from "../../generic-components/VOBreadcrumb/V0Breadcrumb";
 import V0StoreProfile from "../../generic-components/V0StoreProfile/V0StoreProfile";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -114,6 +115,8 @@ const AppleStore = () => {
     (state: RootState) => state.products.products
   );
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getProducts({ sortBy, sortType }));
   }, []);
@@ -149,7 +152,7 @@ const AppleStore = () => {
                   </span>
                 </ProductPrice>
                 <ProductActions>
-                  <Button>Add to Cart</Button>
+                  <Button onClick={() => {navigate("/admin/products/add")}}>Add to Cart</Button>
                   <Button>Buy Now</Button>
                 </ProductActions>
               </ProductInfo>

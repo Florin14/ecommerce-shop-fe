@@ -28,9 +28,14 @@ const WelcomePage = React.lazy(
 const ProfilePage = React.lazy(
   () => import("./components/pages/ProfilePage/Profile")
 );
-const ProductsPage = React.lazy(
-  () => import("./components/pages/ProductsPage/Products")
+const AddProductPage = React.lazy(
+  () => import("./components/pages/AddProductPage/AddProductPage")
 );
+
+const ProductsPage = React.lazy(
+  () => import("./components/pages/AppleStore/AppleStore")
+);  
+
 
 const CategoriesPage = React.lazy(
   () => import("./components/pages/CategoriesPage/Categories")
@@ -43,9 +48,6 @@ const BrandsPage = React.lazy(
 const UserPage = React.lazy(
   () => import("./components/pages/UserPage/User")
 );
-// const AssignmentsPage = React.lazy(() => import('../assignments/AssignmentsPage'))
-// const AnnouncementsPage = React.lazy(() => import('../announcements/AnnouncementsPage'))
-
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -57,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/products",
         element: <ProductsPage />,
+      },
+      {
+        path: "/admin/products/add",
+        element: <AddProductPage />,
       },
       {
         path: "/admin/categories",
