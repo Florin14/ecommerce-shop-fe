@@ -9,6 +9,7 @@ import V0Navbar from "../../generic-components/V0Navbar/V0Navbar";
 import V0Breadcrumb from "../../generic-components/VOBreadcrumb/V0Breadcrumb";
 import V0StoreProfile from "../../generic-components/V0StoreProfile/V0StoreProfile";
 import { useNavigate } from "react-router-dom";
+import imageNotFound from "../../../assets/ImageNotFound.png";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -75,12 +76,14 @@ const ProductImage = styled("img")`
 
 const WishlistButton = styled("button")`
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: none;
+  top: 1rem;
+  right: 0rem;
+  background: black;
+  border-radius: 10px 0 0 10px;
   border: none;
   color: #fff;
   cursor: pointer;
+  padding: 12px 5px 8px 10px;
 `;
 
 const ProductInfo = styled("div")`
@@ -103,6 +106,32 @@ const ProductActions = styled("div")`
   margin-top: 1rem;
 `;
 
+const ImagesSection = styled("div")`
+  display: flex;
+  justify-content: center;
+  // margin: auto;
+  align-items: center;
+  background: black;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px 8px 0 0;
+`;
+
+const CarouselWrapper = styled("div")`
+  width: 100%;
+  height: 100%;
+  padding: 20px 15px;
+  border-radius: 10px;
+  // object-fit: contain;
+  background: black;
+`;
+
+const NoImageFound = styled("img")`
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+`;
+
 const AppleStore = () => {
   const sortBy = useAppSelector((state: RootState) => state.products.sortBy);
 
@@ -114,6 +143,8 @@ const AppleStore = () => {
   const products = useAppSelector(
     (state: RootState) => state.products.products
   );
+
+  console.log(products);
 
   const navigate = useNavigate();
 
@@ -131,9 +162,30 @@ const AppleStore = () => {
         </InfoHeader>
         <V0StoreProfile />
         <ProductGrid>
-          {productsData.map((product, index) => (
+          {products.map((product, index) => (
             <ProductCard key={index}>
-              <ProductImage src={product.image} alt={product.name} />
+              {/* <ImagesSection>
+                <CarouselWrapper>
+                  {images?.length > 0 ? (
+                    <Carousel images={images} />
+                  ) : (
+                    <NoImageFound src={imageNotFound} alt=" No images found" />
+                  )}
+                </CarouselWrapper>
+              </ImagesSection> */}
+
+              {product.images?.length > 0 ? (
+                <ProductImage
+                  src={
+                    typeof product.images[0]?.imageData === "string"
+                      ? `data:image/jpeg;base64,${product.images[0]?.imageData}`
+                      : URL.createObjectURL(product.images[0]?.imageData)
+                  }
+                  alt={product.name}
+                />
+              ) : (
+                <NoImageFound src={imageNotFound} alt=" No images found" />
+              )}
               <WishlistButton>
                 <Heart size={18} />
               </WishlistButton>
@@ -148,11 +200,17 @@ const AppleStore = () => {
                       marginLeft: "0.5rem",
                     }}
                   >
-                    ${product.originalPrice.toFixed(2)}
+                    ${product.price.toFixed(2)}
                   </span>
                 </ProductPrice>
                 <ProductActions>
-                  <Button onClick={() => {navigate("/admin/products/add")}}>Add to Cart</Button>
+                  <Button
+                    onClick={() => {
+                      navigate("/admin/products/add");
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
                   <Button>Buy Now</Button>
                 </ProductActions>
               </ProductInfo>

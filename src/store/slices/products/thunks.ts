@@ -10,6 +10,9 @@ export const getProductsResources = createAsyncThunk(
     const options = {
       url: `/api/products/resources`,
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
     };
     try {
       const response = await Axios(options);
@@ -105,6 +108,7 @@ export const addProducts = createAsyncThunk(
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
       data: formData,
     };
@@ -128,6 +132,9 @@ export const getProductDetails = createAsyncThunk(
     const options = {
       url: `/api/products/${id}`,
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
     };
     try {
       const response = await Axios(options);
