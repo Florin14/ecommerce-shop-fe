@@ -15,6 +15,7 @@ import { Snackbar } from "./components/generic-components/Snackbar";
 import { Layout } from "./containers";
 import { NotFound } from "./containers/NotFound";
 import ProductDetailPage from "./components/pages/ProductDetailPage/ProductDetailPage";
+import CustomerProfile from "./components/pages/CustomerPage/CustomerPage";
 
 const LoginPage = React.lazy(() => import("./components/Login/LoginPage"));
 
@@ -34,8 +35,7 @@ const AddProductPage = React.lazy(
 
 const ProductsPage = React.lazy(
   () => import("./components/pages/AppleStore/AppleStore")
-);  
-
+);
 
 const CategoriesPage = React.lazy(
   () => import("./components/pages/CategoriesPage/Categories")
@@ -45,9 +45,7 @@ const BrandsPage = React.lazy(
   () => import("./components/pages/BrandsPage/Brands")
 );
 
-const UserPage = React.lazy(
-  () => import("./components/pages/UserPage/User")
-);
+const UserPage = React.lazy(() => import("./components/pages/UserPage/User"));
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -78,8 +76,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/products/:productId",
-        element: <ProductDetailPage />, // Replace with the actual component for product details
+        element: <ProductDetailPage />,
       },
+      { path: "/admin/profile", element: <CustomerProfile /> },
       // {
       //   path: '/logout',
       //   element: <LogoutRedirect redirectAfterLogoutTo={"/"} />,
@@ -87,7 +86,7 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/register", element: <RegisterPage /> },
-  { path: "/login", element: <LoginPage/>},
+  { path: "/login", element: <LoginPage /> },
   {
     path: "/",
     element: (

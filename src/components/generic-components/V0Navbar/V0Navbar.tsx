@@ -10,9 +10,12 @@ import {
   FileText,
   Settings,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const V0Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  
   const handleUserMenuClick = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
@@ -21,7 +24,7 @@ const V0Navbar = () => {
   };
 
   const handleProfile = () => {
-    // Navigate to profile page
+    navigate("/admin/profile");
   };
 
   const handleOrders = () => {
@@ -29,7 +32,7 @@ const V0Navbar = () => {
   };
   return (
     <Header>
-      <Logo>GARTEX</Logo>
+      <Logo>Z-Flo Market</Logo>
       <SearchBar>
         <Search size={18} />
         <SearchInput placeholder="Search" />

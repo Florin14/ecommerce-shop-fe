@@ -10,6 +10,7 @@ import V0Breadcrumb from "../../generic-components/VOBreadcrumb/V0Breadcrumb";
 import V0StoreProfile from "../../generic-components/V0StoreProfile/V0StoreProfile";
 import { useNavigate } from "react-router-dom";
 import imageNotFound from "../../../assets/ImageNotFound.png";
+import Breadcrumb from "../../generic-components/Breadcrumb/Breadcrumb";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -152,18 +153,29 @@ const AppleStore = () => {
     dispatch(getProducts({ sortBy, sortType }));
   }, []);
 
+  const handleProductClick = (id: number) => {
+    // Navigate to the product page with the given productId
+    navigate(`/admin/products/${id}`);
+  };
+
   return (
     <Container>
       <V0Sidebar />
       <MainContent>
         <V0Navbar />
         <InfoHeader>
-          <V0Breadcrumb />
+          {/* <V0Breadcrumb /> */}
+          <Breadcrumb />
         </InfoHeader>
         <V0StoreProfile />
         <ProductGrid>
           {products.map((product, index) => (
-            <ProductCard key={index}>
+            <ProductCard
+              key={index}
+              onClick={() => {
+                handleProductClick(product.id);
+              }}
+            >
               {/* <ImagesSection>
                 <CarouselWrapper>
                   {images?.length > 0 ? (
