@@ -1,55 +1,331 @@
-import { Button, styled } from "@mui/material";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
+import {
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Tabs,
+  Tab,
+  Box,
+  Rating,
+  IconButton,
+  Breadcrumbs,
+  Link,
+} from "@mui/material";
+import {
+  Favorite,
+  Share,
+  ShoppingCart,
+  Add,
+  Remove,
+} from "@mui/icons-material";
+import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../store/hooks";
 import { getProductDetails } from "../../../store/slices/products/thunks";
 
-const ProductDetailPage = () => {
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
+
+const Container = styled("div")(({ theme }) => ({
+  minHeight: "100vh",
+  backgroundColor: theme.palette.background.default,
+  color: theme.palette.text.primary,
+  padding: theme.spacing(4),
+}));
+
+const ProductImage = styled("img")({
+  width: "100%",
+  height: "auto",
+  objectFit: "cover",
+  borderRadius: 8,
+});
+
+const ColorButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "selected",
+})<{ selected?: boolean }>(({ theme, selected }) => ({
+  minWidth: 0,
+  width: 40,
+  height: 40,
+  borderRadius: "50%",
+  margin: theme.spacing(0, 1, 1, 0),
+  border: selected ? `2px solid ${theme.palette.primary.main}` : "none",
+}));
+
+const SizeButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "selected",
+})<{ selected?: boolean }>(({ theme, selected }) => ({
+  minWidth: 0,
+  width: 48,
+  height: 48,
+  margin: theme.spacing(0, 1, 1, 0),
+  // backgroundColor: selected ? theme.palette.primary.main : "transparent",
+  // color: selected
+  //   ? theme.palette.primary.contrastText
+  //   : theme.palette.text.primary,
+  // "&:hover": {
+  //   backgroundColor: selected
+  //     ? theme.palette.primary.dark
+  //     : theme.palette.action.hover,
+  // },
+}));
+
+interface ProductDetailState {
+  quantity: number;
+  selectedColor: string;
+  selectedSize: string;
+  tabValue: number;
+}
+
+const ProductDetail: React.FC = () => {
   const { productId } = useParams();
 
-  const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [tabValue, setTabValue] = useState(null);
 
   useEffect(() => {
     dispatch(getProductDetails({ id: productId }));
   }, [productId]);
+
+  // state: ProductDetailState = {
+  //   quantity: 1,
+  //   selectedColor: 'black',
+  //   selectedSize: 'm',
+  //   tabValue: 0,
+  // }
+
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
+  };
+
+  const handleSizeChange = (size: string) => {
+    setSelectedSize(size);
+  };
+
+  const handleQuantityChange = (change: number) => {
+    setQuantity((prevState) => ({
+      quantity: Math.max(1, Math.min(10, prevState.quantity + change)),
+    }));
+  };
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
+
+  const colors = ["black", "white", "gray", "navy"];
+  const sizes = ["xs", "s", "m", "l", "xl"];
+
   return (
-    <Container>
-      <GoBackButton
-        color="info"
-        variant="outlined"
-        onClick={() => handleGoBack()}
-      >
-        Create
-      </GoBackButton>
-    </Container>
+    <ThemeProvider theme={darkTheme}>
+      <Container>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+          <Link color="inherit" href="#">
+            Category
+          </Link>
+          <Link color="inherit" href="#">
+            Clothing
+          </Link>
+          <Typography color="text.primary">Premium T-Shirt</Typography>
+        </Breadcrumbs>
+
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <ProductImage src="/placeholder.svg" alt="Product Image" />
+            <Grid container spacing={2} sx={{ mt: 2 }}>
+              {[...Array(4)].map((_, index) => (
+                <Grid item xs={3} key={index}>
+                  <ProductImage
+                    src="/placeholder.svg"
+                    alt={`Thumbnail ${index + 1}`}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 2,
+              }}
+            >
+              <Typography variant="h4" component="h1" gutterBottom>
+                Premium Cotton T-Shirt
+              </Typography>
+              <Box>
+                <IconButton aria-label="add to favorites">
+                  <Favorite />
+                </IconButton>
+                <IconButton aria-label="share">
+                  <Share />
+                </IconButton>
+              </Box>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Rating value={4} readOnly />
+              <Typography variant="body2" sx={{ ml: 1 }}>
+                (102.2k Reviews)
+              </Typography>
+            </Box>
+
+            <Typography variant="h5" component="p" gutterBottom>
+              $120.00
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ textDecoration: "line-through", mb: 4 }}
+            >
+              $150.00
+            </Typography>
+
+            <Typography variant="subtitle1" gutterBottom>
+              Color
+            </Typography>
+            <Box sx={{ mb: 4 }}>
+              {colors.map((color) => (
+                <ColorButton
+                  key={color}
+                  onClick={() => handleColorChange(color)}
+                  selected={selectedColor === color}
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </Box>
+
+            <Typography variant="subtitle1" gutterBottom>
+              Size
+            </Typography>
+            <Box sx={{ mb: 4 }}>
+              {sizes.map((size) => (
+                <SizeButton
+                  key={size}
+                  onClick={() => handleSizeChange(size)}
+                  selected={selectedSize === size}
+                  variant={selectedSize === size ? "contained" : "outlined"}
+                >
+                  {size.toUpperCase()}
+                </SizeButton>
+              ))}
+            </Box>
+
+            <Typography variant="subtitle1" gutterBottom>
+              Quantity
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
+              <Button
+                variant="outlined"
+                onClick={() => handleQuantityChange(-1)}
+                disabled={quantity <= 1}
+              >
+                <Remove />
+              </Button>
+              <Typography sx={{ mx: 2 }}>{quantity}</Typography>
+              <Button
+                variant="outlined"
+                onClick={() => handleQuantityChange(1)}
+                disabled={quantity >= 10}
+              >
+                <Add />
+              </Button>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  startIcon={<ShoppingCart />}
+                >
+                  Add to Cart
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button variant="outlined" fullWidth>
+                  Buy Now
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Box sx={{ width: "100%", mt: 8 }}>
+          <Tabs value={tabValue} onChange={handleTabChange} centered>
+            <Tab label="Description" />
+            <Tab label="Specifications" />
+            <Tab label="Reviews" />
+          </Tabs>
+          <Box sx={{ p: 3 }}>
+            {tabValue === 0 && (
+              <Typography>
+                Premium cotton t-shirt crafted for comfort and style. Made with
+                100% organic cotton, this t-shirt features a classic fit,
+                reinforced seams, and a durable construction that will last
+                through countless washes. Perfect for everyday wear or casual
+                occasions.
+              </Typography>
+            )}
+            {tabValue === 1 && (
+              <Card>
+                <CardContent>
+                  <Typography variant="body1" gutterBottom>
+                    <strong>Material:</strong> 100% Organic Cotton
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    <strong>Weight:</strong> 180 GSM
+                  </Typography>
+                  <Typography variant="body1">
+                    <strong>Care Instructions:</strong> Machine wash cold
+                  </Typography>
+                </CardContent>
+              </Card>
+            )}
+            {tabValue === 2 && (
+              <Card>
+                <CardContent>
+                  {[...Array(3)].map((_, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        mb: 4,
+                        pb: 2,
+                        borderBottom: index < 2 ? 1 : 0,
+                        borderColor: "divider",
+                      }}
+                    >
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", mb: 1 }}
+                      >
+                        <Rating value={4} readOnly size="small" />
+                        <Typography variant="body2" sx={{ ml: 1 }}>
+                          2 weeks ago
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2">
+                        Great quality t-shirt! The fabric is soft and
+                        comfortable, and the fit is perfect. Would definitely
+                        recommend.
+                      </Typography>
+                    </Box>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 };
 
-export default ProductDetailPage;
-
-const Container = styled("div")`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  min-height: 100%;
-  gap: 20px;
-  padding-top: 60px;
-`;
-
-const GoBackButton = styled(Button)`
-  background-color: #202b3c;
-  color: white;
-  cursor: pointer;
-  :hover {
-    background-color: #202b3c;
-    opacity: 0.5;
-
-    // border: 0;
-  }
-`;
+export default ProductDetail;
