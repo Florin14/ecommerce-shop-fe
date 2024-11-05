@@ -2,35 +2,18 @@ import React, { useEffect, useState } from "react";
 
 import {
   styled,
-  Tabs,
-  Tab,
   Typography,
-  css,
   Button,
-  Autocomplete,
-  TextField,
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Drawer,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { CreateProductModal } from "../../generic-components/modals/CreateProductModal";
-import { PaymentCard } from "../../generic-components/PaymentCard/PaymentCard";
 import { getProducts } from "../../../store/slices/products/thunks";
 import { RootState } from "../../../store";
 import { ProductCard } from "../../generic-components/ProductCard";
 import { ProductResponseDTO } from "../../../types/products/Products";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import TuneIcon from "@mui/icons-material/Tune";
-import { ProductsSortSelect } from "../../generic-components/ProductsSortSelect";
 import { ProductsDrawer } from "../../generic-components/ProductsDrawer";
 import Banner from "../../generic-components/Banner";
 

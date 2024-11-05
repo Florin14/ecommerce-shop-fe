@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import { Search, ShoppingCart, Favorite, Person } from "@mui/icons-material";
+import V0Navbar from "../../generic-components/V0Navbar/V0Navbar";
 
 // Styled Components
 const Header = styled("header")`
@@ -132,20 +133,7 @@ const Button = styled("button")<{ variant?: "primary" | "secondary" }>`
 const OrdersPage = () => {
   return (
     <>
-      <Header>
-        <Logo>GARTEX</Logo>
-        <SearchBar>
-          <Search />
-          <input placeholder="Search" />
-        </SearchBar>
-        <HeaderActions>
-          <MoneyDisplay>Money: $2,250,100.00</MoneyDisplay>
-          <Favorite />
-          <ShoppingCart />
-          <Person />
-        </HeaderActions>
-      </Header>
-
+      <V0Navbar />
       <Layout>
         <Sidebar>
           <h3>CATEGORY</h3>

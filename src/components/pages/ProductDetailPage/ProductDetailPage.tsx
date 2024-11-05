@@ -85,13 +85,13 @@ const ProductDetail: React.FC = () => {
   const { productId } = useParams();
 
   const dispatch = useAppDispatch();
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [quantity, setQuantity] = useState(null);
-  const [tabValue, setTabValue] = useState(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState<number>(0);
+  const [tabValue, setTabValue] = useState<number>(0);
 
   useEffect(() => {
-    dispatch(getProductDetails({ id: productId }));
+    if (productId) dispatch(getProductDetails({ id: parseInt(productId) }));
   }, [productId]);
 
   // state: ProductDetailState = {
@@ -110,9 +110,9 @@ const ProductDetail: React.FC = () => {
   };
 
   const handleQuantityChange = (change: number) => {
-    setQuantity((prevState) => ({
-      quantity: Math.max(1, Math.min(10, prevState.quantity + change)),
-    }));
+    setQuantity((prevState: number) =>
+      Math.max(1, Math.min(10, prevState + change))
+    );
   };
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -120,7 +120,7 @@ const ProductDetail: React.FC = () => {
   };
 
   const colors = ["black", "white", "gray", "navy"];
-  const sizes = ["xs", "s", "m", "l", "xl"];
+  const sizes = ["XS", "S", "M", "L", "XL"];
 
   return (
     <ThemeProvider theme={darkTheme}>
