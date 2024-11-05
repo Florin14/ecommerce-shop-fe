@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import {
   styled,
-  Tabs,
   Tab,
   Typography,
   css,
@@ -14,8 +13,6 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { PaymentCard } from "../../generic-components/PaymentCard/PaymentCard";
-import { CreateCategoryModal } from "../../generic-components/modals/CreateCategoryModal";
-import { getCategories } from "../../../store/slices/categories/thunks";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
 import { CategoryResponseDTO } from "../../../types/categories/Categories";

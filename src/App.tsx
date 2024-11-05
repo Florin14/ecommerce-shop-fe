@@ -37,6 +37,10 @@ const ProductsPage = React.lazy(
   () => import("./components/pages/AppleStore/AppleStore")
 );
 
+const OrdersPage = React.lazy(
+  () => import("./components/pages/OrdersPage/OrdersPage")
+);
+
 const CategoriesPage = React.lazy(
   () => import("./components/pages/CategoriesPage/Categories")
 );
@@ -79,6 +83,7 @@ const router = createBrowserRouter([
         element: <ProductDetailPage />,
       },
       { path: "/admin/profile", element: <CustomerProfile /> },
+      { path: "/admin/orders", element: <OrdersPage /> },
       // {
       //   path: '/logout',
       //   element: <LogoutRedirect redirectAfterLogoutTo={"/"} />,

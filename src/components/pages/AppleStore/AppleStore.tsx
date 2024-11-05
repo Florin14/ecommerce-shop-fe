@@ -11,6 +11,7 @@ import V0StoreProfile from "../../generic-components/V0StoreProfile/V0StoreProfi
 import { useNavigate } from "react-router-dom";
 import imageNotFound from "../../../assets/ImageNotFound.png";
 import Breadcrumb from "../../generic-components/Breadcrumb/Breadcrumb";
+import { useSelector } from "react-redux";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -67,6 +68,7 @@ const ProductCard = styled("div")`
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 `;
 
 const ProductImage = styled("img")`
@@ -133,7 +135,18 @@ const NoImageFound = styled("img")`
   height: 100%;
 `;
 
-const AppleStore = () => {
+interface ImageItem {
+  imageData: string;
+}
+
+interface ProductItem {
+  id: number;
+  name: string;
+  images: ImageItem[];
+  price: number;
+}
+
+const AppleStore: React.FC = () => {
   const sortBy = useAppSelector((state: RootState) => state.products.sortBy);
 
   const sortType = useAppSelector(
@@ -141,11 +154,7 @@ const AppleStore = () => {
   );
 
   const dispatch = useAppDispatch();
-  const products = useAppSelector(
-    (state: RootState) => state.products.products
-  );
-
-  console.log(products);
+  const products = useSelector((state: RootState) => state.products.products);
 
   const navigate = useNavigate();
 
@@ -169,7 +178,7 @@ const AppleStore = () => {
         </InfoHeader>
         <V0StoreProfile />
         <ProductGrid>
-          {products.map((product, index) => (
+          {products.map((product: ProductItem, index) => (
             <ProductCard
               key={index}
               onClick={() => {
@@ -198,7 +207,11 @@ const AppleStore = () => {
               ) : (
                 <NoImageFound src={imageNotFound} alt=" No images found" />
               )}
-              <WishlistButton>
+              <WishlistButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <Heart size={18} />
               </WishlistButton>
               <ProductInfo>
@@ -217,13 +230,20 @@ const AppleStore = () => {
                 </ProductPrice>
                 <ProductActions>
                   <Button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       navigate("/admin/products/add");
                     }}
                   >
                     Add to Cart
                   </Button>
-                  <Button>Buy Now</Button>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    Buy Now
+                  </Button>
                 </ProductActions>
               </ProductInfo>
             </ProductCard>
@@ -235,62 +255,3 @@ const AppleStore = () => {
 };
 
 export default AppleStore;
-
-const productsData = [
-  {
-    name: "Macbook Pro M1 (2021)",
-    price: 2245.9,
-    originalPrice: 2339.9,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/macbook-pro-m1-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "Macbook Pro M2 (2022)",
-    price: 1299.0,
-    originalPrice: 1499.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/macbook-pro-m2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "iPhone 14 Pro",
-    price: 995.0,
-    originalPrice: 1099.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-14-pro-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "iPhone 14 Plus",
-    price: 899.0,
-    originalPrice: 999.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-14-plus-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "Airpods Pro 2",
-    price: 197.5,
-    originalPrice: 249.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/airpods-pro-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "iPad Pro 2 (2021)",
-    price: 753.0,
-    originalPrice: 799.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ipad-pro-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "iPhone SE Gen 2 (2022)",
-    price: 375.0,
-    originalPrice: 429.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone-se-gen-2-erwaMjtGob2wQIxqtYy8facEflTXIv.jpg",
-  },
-  {
-    name: "Apple Watch Series 8",
-    price: 300.0,
-    originalPrice: 399.0,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apple-watch-series-8-erwaMjtGob2wQIxqtYy8facEflT.jpg",
-  },
-];

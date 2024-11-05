@@ -1,4 +1,6 @@
-export const formatNumberWithTwoDecimals = (number) => {
+import { useNavigate } from "react-router-dom";
+
+export const formatNumberWithTwoDecimals = (number: string) => {
   const parsedNumber = parseFloat(number);
 
   if (!isNaN(parsedNumber)) {

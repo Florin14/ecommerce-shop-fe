@@ -9,6 +9,7 @@ import {
   Store,
   Edit,
 } from "@mui/icons-material";
+import V0Navbar from "../../generic-components/V0Navbar/V0Navbar";
 
 // Styled Components
 const Header = styled("header")`
@@ -146,20 +147,7 @@ const OrderCard = styled("div")`
 const CustomerProfile = () => {
   return (
     <>
-      <Header>
-        <Logo>GARTEX</Logo>
-        <SearchBar>
-          <Search />
-          <input placeholder="Search" />
-        </SearchBar>
-        <HeaderActions>
-          <span>Money: $2,250,100.00</span>
-          <Favorite />
-          <ShoppingCart />
-          <Person />
-        </HeaderActions>
-      </Header>
-
+      <V0Navbar />
       <ProfileContainer>
         <ProfileHeader>
           <img

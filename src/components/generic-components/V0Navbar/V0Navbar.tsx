@@ -1,6 +1,7 @@
-import { styled } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { styled } from "@mui/material";
 import {
   Search,
   ShoppingCart,
@@ -10,17 +11,17 @@ import {
   FileText,
   Settings,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const V0Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
-  
+
   const handleUserMenuClick = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
   const handleLogout = () => {
-    // Implement logout functionality
+    localStorage.clear();
+    navigate("/");
   };
 
   const handleProfile = () => {
@@ -28,11 +29,17 @@ const V0Navbar = () => {
   };
 
   const handleOrders = () => {
-    // Navigate to orders page
+    navigate("/admin/orders");
   };
   return (
     <Header>
-      <Logo>Z-Flo Market</Logo>
+      <Logo
+        onClick={() => {
+          navigate("/admin/products");
+        }}
+      >
+        Z-Flo Market
+      </Logo>
       <SearchBar>
         <Search size={18} />
         <SearchInput placeholder="Search" />
@@ -71,11 +78,15 @@ const Header = styled("header")`
   align-items: center;
   padding: 1rem 2rem;
   border-bottom: 1px solid #333;
+  background: #1a1a1a;
+  color: white;
 `;
 
 const Logo = styled("div")`
   font-size: 1.5rem;
   font-weight: bold;
+  color: white;
+  cursor: pointer;
 `;
 
 const SearchBar = styled("div")`
