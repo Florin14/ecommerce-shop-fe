@@ -138,9 +138,30 @@ export const getProductDetails = createAsyncThunk(
     };
     try {
       const response = await Axios(options);
-      const data = response?.data;
+      const data = response?.data?.data;
       thunkAPI.dispatch(productActions.setProduct(data));
       return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        error: true,
+        message: "SomethingWentWrong",
+      });
+    }
+  }
+);
+
+export const updateProductToFavourite = createAsyncThunk(
+  "updateProductToFavourite",
+  async ({ id, name }: { id: number; name: string }, thunkAPI) => {
+    const options = {
+      url: `/api/products/${id}/add-to-favourites`,
+      method: "PUT",
+      data: { name },
+    };
+    try {
+      const response = await Axios(options);
+      // const data = response;
+      return true;
     } catch (e) {
       return thunkAPI.rejectWithValue({
         error: true,

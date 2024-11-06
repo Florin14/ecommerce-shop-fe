@@ -24,6 +24,9 @@ import {
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../store/hooks";
 import { getProductDetails } from "../../../store/slices/products/thunks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import V0Navbar from "../../generic-components/V0Navbar/V0Navbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -90,6 +93,11 @@ const ProductDetail: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(0);
   const [tabValue, setTabValue] = useState<number>(0);
 
+  const productDetails = useSelector(
+    (state: RootState) => state.products.product
+  );
+  console.log(productDetails);
+
   useEffect(() => {
     if (productId) dispatch(getProductDetails({ id: parseInt(productId) }));
   }, [productId]);
@@ -119,12 +127,17 @@ const ProductDetail: React.FC = () => {
     setTabValue(newValue);
   };
 
+  const handleAddToFavourites = () => {
+    
+  }
+
   const colors = ["black", "white", "gray", "navy"];
   const sizes = ["XS", "S", "M", "L", "XL"];
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Container>
+        <V0Navbar/>
         <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
           <Link color="inherit" href="#">
             Category
@@ -132,7 +145,7 @@ const ProductDetail: React.FC = () => {
           <Link color="inherit" href="#">
             Clothing
           </Link>
-          <Typography color="text.primary">Premium T-Shirt</Typography>
+          <Typography color="text.primary">{productDetails?.name || ""}</Typography>
         </Breadcrumbs>
 
         <Grid container spacing={4}>
@@ -160,10 +173,10 @@ const ProductDetail: React.FC = () => {
               }}
             >
               <Typography variant="h4" component="h1" gutterBottom>
-                Premium Cotton T-Shirt
+              {productDetails?.name || ""}
               </Typography>
               <Box>
-                <IconButton aria-label="add to favorites">
+                <IconButton aria-label="add to favorites" onClick={handleAddToFavourites}>
                   <Favorite />
                 </IconButton>
                 <IconButton aria-label="share">
