@@ -66,7 +66,7 @@ const SizeButton = styled(Button, {
   width: 48,
   height: 48,
   margin: theme.spacing(0, 1, 1, 0),
-  // backgroundColor: selected ? theme.palette.primary.main : "transparent",
+  backgroundColor: selected ? theme.palette.primary.main : "transparent",
   // color: selected
   //   ? theme.palette.primary.contrastText
   //   : theme.palette.text.primary,
@@ -127,9 +127,7 @@ const ProductDetail: React.FC = () => {
     setTabValue(newValue);
   };
 
-  const handleAddToFavourites = () => {
-    
-  }
+  const handleAddToFavourites = () => {};
 
   const colors = ["black", "white", "gray", "navy"];
   const sizes = ["XS", "S", "M", "L", "XL"];
@@ -137,7 +135,7 @@ const ProductDetail: React.FC = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <Container>
-        <V0Navbar/>
+        <V0Navbar />
         <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
           <Link color="inherit" href="#">
             Category
@@ -145,21 +143,30 @@ const ProductDetail: React.FC = () => {
           <Link color="inherit" href="#">
             Clothing
           </Link>
-          <Typography color="text.primary">{productDetails?.name || ""}</Typography>
+          <Typography color="text.primary">
+            {productDetails?.name || ""}
+          </Typography>
         </Breadcrumbs>
 
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
-            <ProductImage src="/placeholder.svg" alt="Product Image" />
+            {/* <ProductImage src="/placeholder.svg" alt="Product Image" /> */}
             <Grid container spacing={2} sx={{ mt: 2 }}>
-              {[...Array(4)].map((_, index) => (
-                <Grid item xs={3} key={index}>
-                  <ProductImage
-                    src="/placeholder.svg"
-                    alt={`Thumbnail ${index + 1}`}
-                  />
-                </Grid>
-              ))}
+              {productDetails?.images?.length > 0 ? (
+                <ProductImage
+                  src={
+                    typeof productDetails?.images[0]?.imageData === "string"
+                      ? `data:image/jpeg;base64,${productDetails?.images[0]?.imageData}`
+                      : URL.createObjectURL(
+                          productDetails?.images[0]?.imageData
+                        )
+                  }
+                  alt={productDetails?.name}
+                />
+              ) : (
+                <></>
+                // <NoImageFound src={imageNotFound} alt=" No images found" />
+              )}
             </Grid>
           </Grid>
 
@@ -173,10 +180,13 @@ const ProductDetail: React.FC = () => {
               }}
             >
               <Typography variant="h4" component="h1" gutterBottom>
-              {productDetails?.name || ""}
+                {productDetails?.name || ""}
               </Typography>
               <Box>
-                <IconButton aria-label="add to favorites" onClick={handleAddToFavourites}>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={handleAddToFavourites}
+                >
                   <Favorite />
                 </IconButton>
                 <IconButton aria-label="share">
@@ -193,7 +203,7 @@ const ProductDetail: React.FC = () => {
             </Box>
 
             <Typography variant="h5" component="p" gutterBottom>
-              $120.00
+              {productDetails?.price || ""} RON
             </Typography>
             <Typography
               variant="body2"
@@ -281,11 +291,7 @@ const ProductDetail: React.FC = () => {
           <Box sx={{ p: 3 }}>
             {tabValue === 0 && (
               <Typography>
-                Premium cotton t-shirt crafted for comfort and style. Made with
-                100% organic cotton, this t-shirt features a classic fit,
-                reinforced seams, and a durable construction that will last
-                through countless washes. Perfect for everyday wear or casual
-                occasions.
+               {productDetails?.description}
               </Typography>
             )}
             {tabValue === 1 && (
