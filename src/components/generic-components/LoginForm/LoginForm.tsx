@@ -36,9 +36,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ registerClick }) => {
   // Wire to backend endpoint using RTK (create a slice etc.)
   // Note: handleRegistrationSubmit accepts formData as a parameter
   const handleLoginSubmit: SubmitHandler<Login> = async (formData) => {
-    // const data = { email: email, password: password };
-    // dispatch(login({ email: formData.email, password: formData.password }));
-    // API call to '/login'
     dispatch(authenticateUser(formData)).then((res: any) => {
       if (res.type.includes("fulfilled")) {
         navigate("/admin/products");
