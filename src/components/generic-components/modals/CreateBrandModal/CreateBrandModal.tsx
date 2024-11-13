@@ -77,22 +77,8 @@ export const CreateBrandModal: React.FC<CreateBrandModalProps> = ({
 
   // const editMode = !!announcement
 
-  // useEffect(() => {
-  //   // Fill with pre-existing data when updating
-  //   if (announcement) {
-  //     setValue('title', announcement.title)
-  //     setValue('price', announcement.price)
-  //     setValue('interestArea', announcement.interestAreas.name)
-  //     setValue('description', announcement.description)
-  //   }
-  // }, [announcement])
 
   const setInterestAreas = () => {
-    // const interestAreaNames: string[] = []
-    // interestAreasOptions?.map(interestArea => {
-    //   interestAreaNames.push(interestArea.name)
-    // })
-    // interestAreaNames && setListOfInterestAreas(interestAreaNames)
   };
 
   const getInterestAreaId = (name: string) => {
@@ -132,28 +118,7 @@ export const CreateBrandModal: React.FC<CreateBrandModalProps> = ({
     //   )
   };
 
-  // if (areasId && userData && editMode) {
-  //   dispatch(
-  //     updateAnnouncement({
-  //       id: announcement.id,
-  //       interestAreasId: areasId,
-  //       userId: userData?.id,
-  //       title: formData.title,
-  //       price: formData.price,
-  //       description: formData.description,
-  //     })
-  //   )
-  // }
-  // handleClose()
-  // }
-
   const handleCloseModal = () => {
-    // reset({
-    //   title: '',
-    //   description: '',
-    //   interestArea: '',
-    //   price: undefined,
-    // })
     onClose();
     setName("");
   };
@@ -163,9 +128,6 @@ export const CreateBrandModal: React.FC<CreateBrandModalProps> = ({
       setName(brand?.name);
     }
   }, [isOpen]);
-
-  // Shouldn't be the case; just making sure
-  // if (role !== Role.MENTOR) return null
 
   return (
     <Dialog open={isOpen} onClose={handleCloseModal} disableScrollLock={false}>

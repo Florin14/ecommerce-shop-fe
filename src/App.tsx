@@ -7,9 +7,6 @@ import {
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { LoadingScreen, AlreadyAuth } from "./utils/app-utils";
-// import { LogoutRedirect } from '../login/LogoutRedirect'
-// import { NotFound } from '../layout/errorPages'
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { theme } from "./utils/theme";
 import { Snackbar } from "./components/generic-components/Snackbar";
 import { Layout } from "./containers";
