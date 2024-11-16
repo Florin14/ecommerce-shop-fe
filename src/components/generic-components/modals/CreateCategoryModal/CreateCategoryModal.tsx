@@ -23,14 +23,6 @@ import {
   updateCategory,
 } from "../../../../store/slices/categories/thunks";
 import { CategoryResponseDTO } from "../../../../types/categories/Categories";
-// import { Role } from '../../../types/User'
-// import { FormInput } from '../../common/FormInput'
-// import { AnnouncementDto } from '../../../types/Announcements'
-// import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
-// import { selectInterestAreasOptions, selectInterestAreasOptionsLoading, selectUserData } from '../../account/selectors'
-// import { fetchInterestAreasOptions } from '../../account/actions'
-// import { LoadingOverlay } from '../../common/LoadingOverlay'
-// import { addAnnouncement, updateAnnouncement } from '../actions'
 
 export type CreateCategoryType = {
   name: string;
@@ -151,12 +143,6 @@ export const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
   // }
 
   const handleCloseModal = () => {
-    // reset({
-    //   title: '',
-    //   description: '',
-    //   interestArea: '',
-    //   price: undefined,
-    // })
     onClose();
     setName("");
   };

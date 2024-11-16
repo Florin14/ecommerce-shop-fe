@@ -32,14 +32,6 @@ interface ModalInstance {
 
 const BrandsPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const [selectedCategory, setSelectedCategory] = useState(
-  //   AnnouncementCategory.FEED
-  // );
-
-  // const announcementsLoading = useAppSelector(selectAnnouncementsLoading)
-  // const announcementsError = useAppSelector(selectAnnouncementsError)
-  // const announcementsData = useAppSelector(selectAnnouncementsData)
-  // const searchDone = useAppSelector(selectAnnouncementsResultsSuccess)
   const brands = useSelector((state: RootState) => state.brands.brands);
   const [init, setInit] = useState(false);
   // const role = userData?.role
@@ -124,11 +116,7 @@ const BrandsPage: React.FC = () => {
 
   return (
     <Container>
-      {/* {searchDone && (
-        <Button onClick={() => dispatch(fetchAnnouncements())} color="secondary">
-          Back to all announcements
-        </Button>
-      )} */}
+
       <Title variant="overline">Brands</Title>
 
       <CreateBrandButton

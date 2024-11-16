@@ -20,14 +20,6 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { StyledInput } from "../../StyledInput";
 import { BrandResponseDTO } from "../../../../types/brands/Brands";
 import { addBrand, updateBrand } from "../../../../store/slices/brands/thunks";
-// import { Role } from '../../../types/User'
-// import { FormInput } from '../../common/FormInput'
-// import { AnnouncementDto } from '../../../types/Announcements'
-// import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
-// import { selectInterestAreasOptions, selectInterestAreasOptionsLoading, selectUserData } from '../../account/selectors'
-// import { fetchInterestAreasOptions } from '../../account/actions'
-// import { LoadingOverlay } from '../../common/LoadingOverlay'
-// import { addAnnouncement, updateAnnouncement } from '../actions'
 
 export type CreateBrandType = {
   name: string;
@@ -37,7 +29,6 @@ interface CreateBrandModalProps {
   isOpen: boolean;
   onClose: () => void;
   brand: BrandResponseDTO | null;
-  // announcement?: AnnouncementDto
 }
 
 export const CreateBrandModal: React.FC<CreateBrandModalProps> = ({
@@ -62,18 +53,6 @@ export const CreateBrandModal: React.FC<CreateBrandModalProps> = ({
   // const interestAreasOptions = useAppSelector(selectInterestAreasOptions)
   // const interestAreasOptionsLoading = useAppSelector(selectInterestAreasOptionsLoading)
   const [name, setName] = useState("");
-
-  // const { field: title } = useController({ name: "title", control });
-  // const { field: price } = useController({ name: "price", control });
-  // const { field: interestArea } = useController({
-  //   name: "interestArea",
-  //   control,
-  // });
-  // const { field: description } = useController({
-  //   name: "description",
-  //   control,
-  //   rules: { required: true },
-  // });
 
   // const editMode = !!announcement
 
