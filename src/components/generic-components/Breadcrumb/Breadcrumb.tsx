@@ -68,7 +68,6 @@ const Breadcrumb = () => {
     };
   });
 
-  // Add home as first item
   breadcrumbItems.unshift({
     name: "Homepage",
     url: "/home",

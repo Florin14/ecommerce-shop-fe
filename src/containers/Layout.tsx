@@ -16,12 +16,6 @@ export const Layout: React.FC = () => {
   // const dispatch = useAppDispatch()
   // const userData = useAppSelector(selectUserData)
 
-  // useEffect(() => {
-  //   if (!userData) {
-  //     dispatch(fetchUserData())
-  //     dispatch(fetchUserAvatar())
-  //   }
-  // }, [userData])
 
   // if (!isAuthenticated) {
   //   dispatch(
@@ -45,10 +39,6 @@ export const Layout: React.FC = () => {
     <LoadingScreen>
       <Page>
         <Container>
-          {/* <AquabisSidebar
-            handleDrawerToggle={handleDrawerToggle}
-            open={mobileOpen}
-          /> */}
           <Content>
             <Outlet />
           </Content>

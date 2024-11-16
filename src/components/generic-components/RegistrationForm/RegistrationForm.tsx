@@ -22,11 +22,6 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useAppDispatch } from "../../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-// import { addUser } from "../../../store/slices/users/thunks";
-
-// import { useAppDispatch } from '../../../redux/hooks'
-// import { addUser } from '../actions'
-// import { resetAuthState } from '../../application/slice'
 
 export type RegistrationFormType = {
   firstName: string;
@@ -201,13 +196,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
           />
         </TextFieldGroup>
         <StyledTextField
-          // {...register("email", {
-          //   required: "Email is required",
-          //   pattern: {
-          //     value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          //     message: "Invalid email address",
-          //   },
-          // })}
           label="Email"
           color="secondary"
           type="email"
@@ -280,15 +268,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
             })}
         </div>
         <StyledTextField
-          // {...register("confirmPassword", {
-          //   required: "Parola este obligatorie",
-          //   minLength: 6,
-          //   validate: {
-          //     passwordsNotMatching: (confirmPasswordValue) =>
-          //       confirmPasswordValue === getValues("password") ||
-          //       "Password not matching",
-          //   },
-          // })}
           label="Confirma parola"
           type={confirmPasswordType}
           size="small"
