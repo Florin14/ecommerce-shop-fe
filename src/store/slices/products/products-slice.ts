@@ -1,15 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ProductInterface {
-  payload: string;
+interface ProductInterface {
+  // payload: string;
+  item: any;
 }
 
-export interface ProductsInterface {
-  products: [];
-}
-
-export interface ProductSlice {
-  products: [];
+interface ProductSlice {
+  products: any[];
   resources: {};
   product: any;
   sortBy: string | null,
