@@ -4,24 +4,25 @@ import productsReducer from "./slices/products/products-slice";
 import categoriesReducer from "./slices/categories/categories-slice";
 import loadingReducer from "./slices/loading/loading-slice";
 import brandsReducer from "./slices/brands/brands-slice";
-import stockQuantityReducer from "./slices/stock-quantity/stock-quantity-slice"
-
+import stockQuantityReducer from "./slices/stock-quantity/stock-quantity-slice";
+import favouritesReducer from "./slices/favourites/favourites-slice";
 
 const store = configureStore({
-    reducer: {
-        website: websiteReducer,
-        products: productsReducer,
-        categories: categoriesReducer,
-        brands: brandsReducer,
-        stockQuantity: stockQuantityReducer,
-        loading: loadingReducer,
-    },
-    middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
+  reducer: {
+    website: websiteReducer,
+    products: productsReducer,
+    categories: categoriesReducer,
+    brands: brandsReducer,
+    stockQuantity: stockQuantityReducer,
+    favourites: favouritesReducer,
+    loading: loadingReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export default store;
 
-  
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-export * from './api'
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export * from "./api";
