@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import imageNotFound from "../../../assets/ImageNotFound.png";
 import Breadcrumb from "../../generic-components/Breadcrumb/Breadcrumb";
 import { useSelector } from "react-redux";
+import SelectProductSizeModal from "../../generic-components/SelectProductSizeModal/SelectProductSizeModal";
 
 const Container = styled("div")`
   background-color: #1a1a1a;
@@ -155,6 +156,7 @@ const AppleStore: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const products = useSelector((state: RootState) => state.products.products);
+  const [productSizesIsOpen, setProductSizesIsOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -232,7 +234,7 @@ const AppleStore: React.FC = () => {
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate("/admin/products/add");
+                      setProductSizesIsOpen(true);
                     }}
                   >
                     Add to Cart
@@ -249,6 +251,12 @@ const AppleStore: React.FC = () => {
             </ProductCard>
           ))}
         </ProductGrid>
+        <SelectProductSizeModal
+          isOpen={productSizesIsOpen}
+          onClose={() => {
+            setProductSizesIsOpen(false);
+          }}
+        />
       </MainContent>
     </Container>
   );

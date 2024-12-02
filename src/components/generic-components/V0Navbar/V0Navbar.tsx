@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { styled } from "@mui/material";
+import { styled, Tooltip } from "@mui/material";
 import {
   Search,
   ShoppingCart,
@@ -46,8 +46,12 @@ const V0Navbar = () => {
       </SearchBar>
       <HeaderIcons>
         <WalletInfo>Money: $2,250,100.00</WalletInfo>
-        <Heart />
-        <ShoppingCart />
+        <Tooltip title={"Favorite"} disableInteractive>
+          <FavouritesIcon onClick={() => {}} />
+        </Tooltip>
+        <Tooltip title={"Cos"} disableInteractive>
+          <ShoppingCartIcon onClick={() => {}} />
+        </Tooltip>
         <UserAvatar onClick={handleUserMenuClick}>
           <User size={18} />
           <UserMenu isOpen={isUserMenuOpen}>
@@ -114,6 +118,14 @@ const HeaderIcons = styled("div")`
   display: flex;
   gap: 1rem;
   align-items: center;
+`;
+
+const FavouritesIcon = styled(Heart)`
+  cursor: pointer;
+`;
+
+const ShoppingCartIcon = styled(ShoppingCart)`
+  cursor: pointer;
 `;
 
 const WalletInfo = styled("span")`
