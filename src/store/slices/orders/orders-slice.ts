@@ -5,15 +5,17 @@ export interface OrderInterface {
 }
 
 export interface OrderInterface {
-  orders: []
+  orders: [];
+  orderItems: [];
 }
 
 export interface Order {
-    name: string
-  }
+  name: string;
+}
 
 const initialState = {
   orders: [],
+  orderItems: [],
 };
 
 const orderSlice = createSlice({
@@ -22,6 +24,7 @@ const orderSlice = createSlice({
   reducers: {
     setToEmpty(state, action) {
       state.orders = [];
+      state.orderItems = [];
     },
 
     setOrders(state, action) {
@@ -30,6 +33,9 @@ const orderSlice = createSlice({
 
     addOrder(state, action) {
       state.orders.push(action.payload.item);
+    },
+    addOrderItems(state, action) {
+      state.orderItems.push(action.payload.item);
     },
 
     editOrder(state, action) {
