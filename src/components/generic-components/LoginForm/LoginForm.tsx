@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "axios";
 import { authenticateUser } from "../../../store/slices/auth/actions";
+import { login } from "../../../store/slices/users/thunks";
 interface LoginFormProps {
   registerClick: () => void;
 }
@@ -36,12 +37,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({ registerClick }) => {
   // Wire to backend endpoint using RTK (create a slice etc.)
   // Note: handleRegistrationSubmit accepts formData as a parameter
   const handleLoginSubmit: SubmitHandler<Login> = async (formData) => {
-    dispatch(authenticateUser(formData)).then((res: any) => {
-      if (res.type.includes("fulfilled")) {
-        navigate("/admin/products");
-      }
-      // dispatch(resetAuthState())
-    });
+    // dispatch(authenticateUser(formData)).then((res: any) => {
+    //   if (res.type.includes("fulfilled")) {
+    //     navigate("/admin/products");
+    //   }
+    //   // dispatch(resetAuthState())
+    // });
+
+    dispatch(login({password: formData.email, email: formData.password})).then((res: any) => {
+        // if (res.type.includes("fulfilled")) {
+        //   navigate("/admin/products");
+      // }
+      
+      console.log(res);
+      });
+  
   };
 
   const goToRegister = () => {

@@ -22,6 +22,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useAppDispatch } from "../../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { addUser } from "../../../store/slices/auth/actions";
 
 export type RegistrationFormType = {
   firstName: string;
@@ -138,16 +139,16 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
     };
 
     // // API call to '/register'
-    // dispatch(addUser(userData)).then(response => {
-      // if (response.type === 'addUser/fulfilled') {
-      //   // empty all fields after submitting
-      //   resetForm()
-      //   // Move back to log in after successfully registering
-      //   loginClick()
-      //   // make sure to reset loading / complete status for registration action
-      //   // dispatch(resetAuthState())
-      // }
-    // })
+    dispatch(addUser(userData)).then(response => {
+      if (response.type === 'addUser/fulfilled') {
+        // // empty all fields after submitting
+        // resetForm()
+        // // Move back to log in after successfully registering
+        // loginClick()
+        // make sure to reset loading / complete status for registration action
+        // dispatch(resetAuthState())
+      }
+    })
   };
 
   const goToLogin = () => {
