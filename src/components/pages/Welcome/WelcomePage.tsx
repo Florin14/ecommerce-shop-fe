@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import { css, styled, Typography } from "@mui/material";
 
-// import { LoginForm } from '../login/LoginForm'
-// import { RegistrationForm } from '../registration/RegistrationForm'
-// import { LoadingOverlay } from '../common/LoadingOverlay'
-
-// import registerIllustrationSrc from '../registration/images/register_figure.png'
-// import loginIllustrationSrc from '../login/images/login_figure.png'
-// import bottomWaveSrc from './images/wave.svg'
 import { LoginForm } from "../../generic-components/LoginForm";
 import Login from "../../generic-components/Login/Login";
-// import { Sidebar3 } from "../../generic-components/Sidebar/Sidebar3";
-// import { Sidebar2 } from "../../generic-components/Sidebar";
 
 enum Mode {
   REGISTER = "REGISTER",

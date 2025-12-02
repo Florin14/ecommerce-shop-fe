@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginCall } from "./services";
-import { LoginUserDTO } from "../../../types/users/Users";
+import { addUserCall, loginCall } from "./services";
+import { LoginUserDTO, RegisterUserDTO } from "../../../types/users/Users";
 
 export const authenticateUser = createAsyncThunk(
   "authenticateUser",
@@ -14,3 +14,6 @@ export const authenticateUser = createAsyncThunk(
     }
   }
 );
+
+export const addUser = createAsyncThunk('addUser', async (user: RegisterUserDTO) => addUserCall(user))
+

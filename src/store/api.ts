@@ -1,18 +1,19 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { InternalAxiosRequestConfig } from "axios";
 
-const hostName = 'localhost'
-const port = 3000
+const hostName = "localhost";
+const port = 8002;
 
 export const axiosInstance = axios.create({
   baseURL: `http://${hostName}:${port}/api/`,
-  timeout: 2000,
+  timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
-})
+});
 
-axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.headers = { ...config.headers, Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
-
-  return config
-})
+axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  if (config.headers) {
+    config.headers.Authorization = `Bearer ${localStorage.getItem("jwtToken")}`;
+  }
+  return config;
+});
